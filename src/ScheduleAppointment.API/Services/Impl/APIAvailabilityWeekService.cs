@@ -1,4 +1,6 @@
-﻿using ScheduleAppointment.API.Model.DTO;
+﻿using Newtonsoft.Json;
+using ScheduleAppointment.API.Factories;
+using ScheduleAppointment.API.Model.DTO;
 using ScheduleAppointment.API.Providers;
 using System;
 using System.Threading.Tasks;
@@ -15,13 +17,34 @@ namespace ScheduleAppointment.API.Services.Impl
 
 
         private IHttpClientProvider _httpClientProvider;
-        private ILoggerProvider _loggerService;
+        private ILoggerProvider _loggerProvider;
+        private IFactory<AvailabilityWeek, WeekSlots> _weekSlotsFactory;
 
 
-        public APIAvailabilityWeekService(IHttpClientProvider httpClientProvider, ILoggerProvider loggerService)
+        public APIAvailabilityWeekService(
+            IHttpClientProvider httpClientProvider, 
+            ILoggerProvider loggerProvider,
+            IFactory<AvailabilityWeek, WeekSlots> weekSlotsFactory)
         {
             _httpClientProvider = httpClientProvider;
-            _loggerService = loggerService;
+            _loggerProvider = loggerProvider;
+            _weekSlotsFactory = weekSlotsFactory;
+        }
+
+
+        public async Task<WeekSlots> GetAvailabilitySlots(DateTime dayOfStartWeek)
+        {
+            try
+            {
+                var result = await GetAvailability(dayOfStartWeek);
+
+                return _weekSlotsFactory.From(result);
+            }
+            catch (Exception err)
+            {
+                await _loggerProvider.Log(err);
+                throw (err);
+            }
         }
 
 
@@ -29,15 +52,24 @@ namespace ScheduleAppointment.API.Services.Impl
         {
             try
             {
-                return
-                    await _httpClientProvider
-                            .CreateClient(new Uri(URL_CLIENT))
-                            .WithBasicAuthenticator(USER, PSW)
-                            .GetAsync<AvailabilityWeek>(string.Format(REQUEST_TEMPLATE, dayOfStartWeek.ToString("yyyyMMdd")));
+                var jsonString = await _httpClientProvider
+                                            .CreateClient(URL_CLIENT)
+                                            .WithBasicAuthenticator(USER, PSW)
+                                            .GetStringAsync(string.Format(REQUEST_TEMPLATE, dayOfStartWeek.ToString("yyyyMMdd")));
+
+                if (string.IsNullOrEmpty(jsonString))
+                    return new AvailabilityWeek();
+
+                return JsonConvert.DeserializeObject<AvailabilityWeek>(jsonString, new JsonSerializerSettings
+                                                                                                {
+                                                                                                    NullValueHandling = NullValueHandling.Ignore,
+                                                                                                    MissingMemberHandling = MissingMemberHandling.Ignore
+                                                                                                });
+
             }
             catch (Exception err)
             {
-                await _loggerService.Log(err);
+                await _loggerProvider.Log(err);
                 throw (err);
             }
         }

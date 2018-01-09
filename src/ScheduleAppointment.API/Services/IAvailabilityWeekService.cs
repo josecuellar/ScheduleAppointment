@@ -7,5 +7,7 @@ namespace ScheduleAppointment.API.Services
     public interface IAvailabilityWeekService
     {
         Task<AvailabilityWeek> GetAvailability(DateTime dayOfStartWeek);
+
+        Task<WeekSlots> GetAvailabilitySlots(DateTime dayOfStartWeek);
     }
 }

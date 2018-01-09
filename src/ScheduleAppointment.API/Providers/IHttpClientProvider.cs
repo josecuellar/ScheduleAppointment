@@ -5,10 +5,10 @@ namespace ScheduleAppointment.API.Providers
 {
     public interface IHttpClientProvider
     {
-        IHttpClientProvider CreateClient(Uri url);
+        IHttpClientProvider CreateClient(string url);
 
         IHttpClientProvider WithBasicAuthenticator(string user, string password);
 
-        Task<T> GetAsync<T>(string request) where T : class;
+        Task<string> GetStringAsync(string request);
     }
 }

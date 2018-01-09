@@ -11,21 +11,21 @@ namespace ScheduleAppointment.API.Controllers
     public class GetAvailabilityWeekController : Controller
     {
 
-        private ILoggerProvider _loggerService;
+        private ILoggerProvider _loggerProvider;
         private IAvailabilityWeekService _availabilityWeekService;
 
 
         public GetAvailabilityWeekController(
-            ILoggerProvider loggerService,
+            ILoggerProvider loggerProvider,
             IAvailabilityWeekService availabilityWeekService)
         {
-            _loggerService = loggerService;
+            _loggerProvider = loggerProvider;
             _availabilityWeekService = availabilityWeekService;
         }
 
 
         [HttpGet]
-        [Route("api/[controller]/{dayOfStartWeek?}")]
+        [Route("api/AvailableWeekSlots/{dayOfStartWeek?}")]
         public async Task<IActionResult> List(string dayOfStartWeek)
         {
             try
@@ -36,16 +36,15 @@ namespace ScheduleAppointment.API.Controllers
                 DateTime.TryParseExact(dayOfStartWeek, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dayOfStartWeekParsed);
 
                 Condition.Requires(dayOfStartWeekParsed)
-                    .IsGreaterThan(DateTime.Today, "Availability must be more bigger than today")
                     .Evaluate(x => x.DayOfWeek == DayOfWeek.Monday, "Weekly based method: always expect Monday");
 
-                var result = await _availabilityWeekService.GetAvailability(dayOfStartWeekParsed);
+                var result = await _availabilityWeekService.GetAvailabilitySlots(dayOfStartWeekParsed);
 
                 return Ok(result);
             }
             catch (Exception err)
             {
-                await _loggerService.Log(err);
+                await _loggerProvider.Log(err);
                 return BadRequest(err);
             }
         }

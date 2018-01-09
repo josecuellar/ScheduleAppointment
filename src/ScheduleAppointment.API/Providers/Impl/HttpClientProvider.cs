@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Conditions;
+using Newtonsoft.Json;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -9,45 +10,84 @@ namespace ScheduleAppointment.API.Providers.Impl
 {
     public class HttpClientProvider : IHttpClientProvider
     {
+
+
         private HttpClient _client;
 
-        public IHttpClientProvider CreateClient(Uri uri)
+        private ILoggerProvider _loggerProvider;
+
+
+        public HttpClientProvider(ILoggerProvider loggerProvider)
         {
-            var handler = new HttpClientHandler();
-            handler.ClientCertificateOptions = ClientCertificateOption.Manual;
-            handler.ServerCertificateCustomValidationCallback =
-                (httpRequestMessage, cert, cetChain, policyErrors) =>
-                {
-                    return true;
-                };
+            _loggerProvider = loggerProvider;
+        }
 
-            _client = new HttpClient(handler)
+
+        public IHttpClientProvider CreateClient(string uri)
+        {
+            try
             {
-                BaseAddress = uri
-            };
-            ;
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                Condition.Requires(uri)
+                        .IsNotNullOrEmpty("Uri for create http client is mandatory")
+                        .Evaluate(Uri.TryCreate(uri, UriKind.Absolute, out Uri uriResult), "The string uri is not valid");
 
-            return this;
+                var handler = new HttpClientHandler();
+                handler.ClientCertificateOptions = ClientCertificateOption.Manual;
+                handler.ServerCertificateCustomValidationCallback = (httpRequestMessage, cert, cetChain, policyErrors) => { return true; };
+
+                _client = new HttpClient(handler){ BaseAddress = new Uri(uri) };
+                
+                _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                return this;
+            }
+            catch (Exception err)
+            {
+                _loggerProvider.Log(err);
+                throw (err);
+            }
         }
 
 
         public IHttpClientProvider WithBasicAuthenticator(string user, string password)
         {
-            var byteArray = Encoding.ASCII.GetBytes(string.Format("{0}:{1}", user, password));
-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
+            try
+            {
+                Condition.Requires(user)
+                    .IsNotNullOrEmpty("user name for basic authentication is mandatory");
 
-            return this;
+                Condition.Requires(password)
+                    .IsNotNullOrEmpty("password for basic authentication is mandatory");
+
+                var byteArray = Encoding.ASCII.GetBytes(string.Format("{0}:{1}", user, password));
+                _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
+
+                return this;
+            }
+            catch (Exception err)
+            {
+                _loggerProvider.Log(err);
+                throw (err);
+            }
         }
 
 
-        public async Task<T> GetAsync<T>(string request) where T : class
+        public async Task<string> GetStringAsync(string request)
         {
-            using (_client)
+            try
             {
-                var response = await _client.GetAsync(request);
-                string stringData = response.Content.ReadAsStringAsync().Result;
-                return JsonConvert.DeserializeObject<T>(stringData);
+                Condition.Requires(request)
+                    .IsNotNullOrEmpty("request method for httpClient is mandatory");
+
+                using (_client)
+                {
+                    return await _client.GetStringAsync(request);
+                }
+            }
+            catch (Exception err)
+            {
+                await _loggerProvider.Log(err);
+                throw (err);
             }
         }
     }

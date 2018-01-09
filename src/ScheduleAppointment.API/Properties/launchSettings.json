@@ -11,7 +11,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "api/GetAvailabilityWeek/",
+      "launchUrl": "api/AvailableWeekSlots/",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -19,7 +19,7 @@
     "AppointmentAPI": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/GetAvailability",
+      "launchUrl": "api/AvailableWeekSlots",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

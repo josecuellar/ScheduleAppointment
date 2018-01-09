@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ScheduleAppointment.API.Factories;
+using ScheduleAppointment.API.Factories.Impl;
+using ScheduleAppointment.API.Model.DTO;
 using ScheduleAppointment.API.Providers;
 using ScheduleAppointment.API.Providers.Impl;
 using ScheduleAppointment.API.Services;
@@ -25,6 +28,7 @@ namespace ScheduleAppointment.API
             services.AddTransient<IAvailabilityWeekService, APIAvailabilityWeekService>();
             services.AddTransient<ILoggerProvider, ConsoleLoggerProvider>();
             services.AddTransient<IHttpClientProvider, HttpClientProvider>();
+            services.AddTransient<IFactory<AvailabilityWeek, WeekSlots>, WeekSlotsFactory>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
