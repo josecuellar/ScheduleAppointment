@@ -9,8 +9,6 @@ namespace ScheduleAppointment.API.Providers
 
         IHttpClientProvider WithBasicAuthenticator(string user, string password);
 
-        IHttpClientProvider WithRequest(string request);
-
-        Task<T> GetAsync<T>() where T : class;
+        Task<T> GetAsync<T>(string request) where T : class;
     }
 }

@@ -27,12 +27,6 @@ namespace ScheduleAppointment.API.Tests.Integration
         {
             // Arrange
             _server = new TestServer(new WebHostBuilder()
-                .UseEnvironment("Development")
-                .UseConfiguration(new ConfigurationBuilder()
-                   .SetBasePath("D:\\Git\\ScheduleAppointment\\src\\ScheduleAppointment.API")
-                    .AddJsonFile("appsettings.json")
-                    .Build()
-                )
                 .UseStartup<Startup>());
 
             _client = _server.CreateClient();

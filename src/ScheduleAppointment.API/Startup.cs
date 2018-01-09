@@ -21,11 +21,10 @@ namespace ScheduleAppointment.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddTransient<ILoggerProvider, ConsoleLoggerProvider>();
-            services.AddTransient<IHttpClientProvider, RestSharpHttpClientProvider>();
-            services.AddTransient<IAvailabilityWeekService, APIAvailabilityWeekService>();
 
-            services.Configure<Settings.APIGetAvailabilityWeekSettings>(Configuration.GetSection("APIGetAvailabilityWeekSettings"));
+            services.AddTransient<IAvailabilityWeekService, APIAvailabilityWeekService>();
+            services.AddTransient<ILoggerProvider, ConsoleLoggerProvider>();
+            services.AddTransient<IHttpClientProvider, HttpClientProvider>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
