@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ScheduleAppointment.API.Providers;
+using ScheduleAppointment.API.Providers.Impl;
 using ScheduleAppointment.API.Services;
 using ScheduleAppointment.API.Services.Impl;
 
@@ -16,14 +18,16 @@ namespace ScheduleAppointment.API
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddTransient<ILoggerService, ConsoleLoggerService>();
+            services.AddTransient<ILoggerProvider, ConsoleLoggerProvider>();
+            services.AddTransient<IHttpClientProvider, RestSharpHttpClientProvider>();
+            services.AddTransient<IAvailabilityWeekService, APIAvailabilityWeekService>();
+
+            services.Configure<Settings.APIGetAvailabilityWeekSettings>(Configuration.GetSection("APIGetAvailabilityWeekSettings"));
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())

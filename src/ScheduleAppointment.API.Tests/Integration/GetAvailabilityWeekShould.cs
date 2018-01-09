@@ -1,12 +1,15 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using ScheduleAppointment.API.Model;
-using System.Collections.Generic;
+using ScheduleAppointment.API.Model.DTO;
+using System;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace ScheduleAppointment.API.Tests.Integration
@@ -24,7 +27,14 @@ namespace ScheduleAppointment.API.Tests.Integration
         {
             // Arrange
             _server = new TestServer(new WebHostBuilder()
+                .UseEnvironment("Development")
+                .UseConfiguration(new ConfigurationBuilder()
+                   .SetBasePath("D:\\Git\\ScheduleAppointment\\src\\ScheduleAppointment.API")
+                    .AddJsonFile("appsettings.json")
+                    .Build()
+                )
                 .UseStartup<Startup>());
+
             _client = _server.CreateClient();
             _client.DefaultRequestHeaders.Clear();
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -75,7 +85,7 @@ namespace ScheduleAppointment.API.Tests.Integration
             response.EnsureSuccessStatusCode();
 
             var json = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<IList<Day>>(json);
+            var result = JsonConvert.DeserializeObject<AvailabilityWeek>(json);
 
             // Assert
             Assert.NotNull(result);

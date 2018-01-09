@@ -1,0 +1,13 @@
+﻿{
+  "buildOptions": {
+    "copyToOutput": [ "appsettings.json" ]
+  },
+  "Logging": {
+    "IncludeScopes": false,
+    "LogLevel": {
+      "Default": "Debug",
+      "System": "Information",
+      "Microsoft": "Information"
+    }
+  }
+}
