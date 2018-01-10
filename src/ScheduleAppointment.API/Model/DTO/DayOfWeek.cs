@@ -2,7 +2,7 @@
 
 namespace ScheduleAppointment.API.Model.DTO
 {
-    public class DayOfWeek
+    public class DayOfWeekInfo
     {
         public WorkPeriod WorkPeriod { get; set; }
 

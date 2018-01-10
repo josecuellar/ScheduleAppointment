@@ -48,7 +48,7 @@ namespace ScheduleAppointment.API.Tests.Unit.Services
 
             _weekSlotsFactory
                 .Setup(m => m.From(It.IsAny<AvailabilityWeek>()))
-                .Returns(new WeekSlots() { ConsecutiveDaysOfWeek = new List<Day>() { new Day(), new Day(), new Day(), new Day(), new Day(), new Day(), new Day() } });
+                .Returns(WeekSlots.CreateAllDaysOfWeekWithNoAvailability());
 
             _service = new APIAvailabilityWeekService(
                                 _httpClientProviderMock.Object, 
@@ -72,7 +72,7 @@ namespace ScheduleAppointment.API.Tests.Unit.Services
             // Act
             try
             {
-                var result = await _service.GetAvailability(parameter);
+                var result = await _service.GetAvailabilityWeekData(parameter);
                 Assert.Fail();
             }
             catch (Exception)
@@ -145,7 +145,7 @@ namespace ScheduleAppointment.API.Tests.Unit.Services
             string request = string.Format(REQUEST_TEMPLATE, parameter.ToString("yyyyMMdd"));
 
             // Act
-            var result = await _service.GetAvailability(parameter);
+            var result = await _service.GetAvailabilityWeekData(parameter);
 
             // Assert
             _httpClientProviderMock.Verify(m => m.CreateClient(URL_CLIENT), Times.Once);
@@ -163,7 +163,7 @@ namespace ScheduleAppointment.API.Tests.Unit.Services
                 .ReturnsAsync(validJSON);
 
             // Act
-            var result = await _service.GetAvailability(It.IsAny<DateTime>());
+            var result = await _service.GetAvailabilityWeekData(It.IsAny<DateTime>());
 
             // Assert
             Assert.IsInstanceOf<AvailabilityWeek>(result);

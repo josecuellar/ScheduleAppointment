@@ -60,6 +60,12 @@ namespace ScheduleAppointment.API.Tests.Integration
 
         [TestCase("20180312")]
         [TestCase("20181015")]
+        [TestCase("20180101")]
+        [TestCase("20180108")]
+        [TestCase("20180115")]
+        [TestCase("20180122")]
+        [TestCase("20170327")]
+        [TestCase("20170306")]
         public async Task Return_number_of_days_list_of_week_given_valid_start_date_week(string startDate)
         {
             // Act

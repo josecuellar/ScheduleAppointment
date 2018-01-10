@@ -36,7 +36,7 @@ namespace ScheduleAppointment.API.Services.Impl
         {
             try
             {
-                var result = await GetAvailability(dayOfStartWeek);
+                var result = await GetAvailabilityWeekData(dayOfStartWeek);
 
                 return _weekSlotsFactory.From(result);
             }
@@ -48,7 +48,7 @@ namespace ScheduleAppointment.API.Services.Impl
         }
 
 
-        public async Task<AvailabilityWeek> GetAvailability(DateTime dayOfStartWeek)
+        public async Task<AvailabilityWeek> GetAvailabilityWeekData(DateTime dayOfStartWeek)
         {
             try
             {

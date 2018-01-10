@@ -6,18 +6,18 @@
 
         public int SlotDurationMinutes { get; set; }
 
-        public DayOfWeek Monday { get; set; }
+        public DayOfWeekInfo Monday { get; set; }
 
-        public DayOfWeek Tuesday { get; set; }
+        public DayOfWeekInfo Tuesday { get; set; }
 
-        public DayOfWeek Wednesday { get; set; }
+        public DayOfWeekInfo Wednesday { get; set; }
 
-        public DayOfWeek Thursday { get; set; }
+        public DayOfWeekInfo Thursday { get; set; }
 
-        public DayOfWeek Friday { get; set; }
+        public DayOfWeekInfo Friday { get; set; }
 
-        public DayOfWeek Saturday { get; set; }
+        public DayOfWeekInfo Saturday { get; set; }
 
-        public DayOfWeek Sunday { get; set; }
+        public DayOfWeekInfo Sunday { get; set; }
     }
 }
