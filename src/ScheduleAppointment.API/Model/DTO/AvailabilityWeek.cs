@@ -6,6 +6,8 @@ namespace ScheduleAppointment.API.Model.DTO
 
     public class AvailabilityWeek
     {
+        public DateTime DayOfMonday { get; set; }
+
         public Facility Facility { get; set; }
 
         public int SlotDurationMinutes { get; set; }
@@ -36,6 +38,8 @@ namespace ScheduleAppointment.API.Model.DTO
 
     public class DayOfWeekInfo
     {
+        public DateTime CurrentDate { get; set; }
+
         public WorkPeriod WorkPeriod { get; set; }
 
         public List<BusySlot> BusySlots { get; set; }

@@ -56,6 +56,8 @@ namespace ScheduleAppointment.API.Services.Impl
             {
                 var result = await GetAvailabilityWeekData(dayOfStartWeek);
 
+                result.DayOfMonday = dayOfStartWeek;
+
                 return _weekSlotsFactory.From(result);
             }
             catch (Exception err)

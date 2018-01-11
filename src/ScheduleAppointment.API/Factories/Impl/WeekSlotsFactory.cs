@@ -14,6 +14,8 @@ namespace ScheduleAppointment.API.Factories.Impl
 
         private ILoggerProvider _loggerProvider;
 
+        private AvailabilityWeek _weekData { get; set; }
+
 
         public WeekSlotsFactory(ILoggerProvider loggerProvider)
         {
@@ -31,14 +33,18 @@ namespace ScheduleAppointment.API.Factories.Impl
 
                 var weekSlots = new WeekSlots();
 
+                _weekData = weekData;
+
                 foreach (var day in Enum.GetValues(typeof(DayOfWeek))
                                   .OfType<DayOfWeek>()
                                   .OrderBy(x => ((int)x + 6) % 7) //Monday first (Sunday is default order)
                                   .ToList())
                 {
-                    var dayOfWeek = GetSpecificDataDay(weekData, day.ToString());
+                    var dayOfWeek = GetSpecificDataDay(day.ToString());
 
-                    var daySlots = CreateAvailableDaySlots(dayOfWeek, weekData.SlotDurationMinutes);
+                    SetCurrentDayOfWeek(day, dayOfWeek);
+
+                    var daySlots = SplitDayInSlots(dayOfWeek);
 
                     weekSlots.AddDayToWeek(daySlots);
                 }
@@ -54,9 +60,18 @@ namespace ScheduleAppointment.API.Factories.Impl
         }
 
 
-        private DayOfWeekInfo GetSpecificDataDay(object objectToReflection, string propName)
+        private void SetCurrentDayOfWeek(DayOfWeek day, DayOfWeekInfo dayOfWeekInfo)
         {
-            var dayOfWeekReflected = (objectToReflection.GetType().GetProperty(propName).GetValue(objectToReflection, null));
+            if (day == DayOfWeek.Monday)
+                dayOfWeekInfo.CurrentDate = _weekData.DayOfMonday;
+            else
+                dayOfWeekInfo.CurrentDate = _weekData.DayOfMonday.AddDays(1);
+        }
+
+
+        private DayOfWeekInfo GetSpecificDataDay(string propName)
+        {
+            var dayOfWeekReflected = (_weekData.GetType().GetProperty(propName).GetValue(_weekData, null));
 
             if (dayOfWeekReflected == null)
                 return new DayOfWeekInfo();
@@ -65,30 +80,31 @@ namespace ScheduleAppointment.API.Factories.Impl
         }
 
 
-        private DaySlots CreateAvailableDaySlots(DayOfWeekInfo dayOfWeekInfo, int slotDurationMinutes)
+        private DaySlots SplitDayInSlots(DayOfWeekInfo dayOfWeekInfo)
         {
             try
             {
-                ThrowExceptionIsNotValidDataDay(dayOfWeekInfo, slotDurationMinutes);
+                ThrowExceptionIsNotValidDataDay(dayOfWeekInfo);
 
 
                 var availableSlots = new List<IntervalSlot>();
 
-                var workStartAt = CreateDateTimeFromHour(dayOfWeekInfo.WorkPeriod.StartHour);
-                var workEndsAt = CreateDateTimeFromHour(dayOfWeekInfo.WorkPeriod.EndHour);
+                var workStartAt = GetDateTimeFrom(dayOfWeekInfo, dayOfWeekInfo.WorkPeriod.StartHour, 0);
+                var workEndsAt = GetDateTimeFrom(dayOfWeekInfo, dayOfWeekInfo.WorkPeriod.EndHour, 0);
 
-                var lunchStartAt = CreateTimeSpanFromHour(dayOfWeekInfo.WorkPeriod.LunchStartHour);
-                var lunchEndsAt = CreateTimeSpanFromHour(dayOfWeekInfo.WorkPeriod.LunchEndHour);
+                var lunchStartAt = GetDateTimeFrom(dayOfWeekInfo, dayOfWeekInfo.WorkPeriod.LunchStartHour, 0);
+                var lunchEndsAt = GetDateTimeFrom(dayOfWeekInfo, dayOfWeekInfo.WorkPeriod.LunchEndHour, 0);
 
                 while (workStartAt != workEndsAt)
                 {
-                    int minutes = +slotDurationMinutes;
+                    int minutes = +_weekData.SlotDurationMinutes;
+
+                    var slotToAdd = GetDateTimeFrom(dayOfWeekInfo, workStartAt.Hour, workStartAt.Minute);
+
+                    if (IsAvailableSlot(dayOfWeekInfo, slotToAdd, lunchStartAt, lunchEndsAt))
+                        availableSlots.Add(new IntervalSlot(slotToAdd, _weekData.SlotDurationMinutes));
+
                     workStartAt = workStartAt.AddMinutes(minutes);
-
-                    var slotToAdd = CreateTimeSpanFromHourAndMinute(workStartAt.Hour, workStartAt.Minute);
-
-                    if (IsAvailableSlot(slotToAdd, dayOfWeekInfo, workStartAt, lunchStartAt, lunchEndsAt))
-                        availableSlots.Add(new IntervalSlot(slotToAdd, slotDurationMinutes));
                 }
 
                 return new DaySlots(availableSlots);
@@ -101,26 +117,19 @@ namespace ScheduleAppointment.API.Factories.Impl
         }
 
 
-        private bool IsAvailableSlot(
-            TimeSpan slotToAd, 
-            DayOfWeekInfo day, 
-            DateTime workStartAt, 
-            TimeSpan lunchStartAt, 
-            TimeSpan lunchEndsAt)
+        private bool IsAvailableSlot(DayOfWeekInfo dayOfWeekInfo, DateTime slotToAd,  DateTime lunchStartAt, DateTime lunchEndsAt)
         {
             if (IsCurrentSlotBetweenLunchTime(slotToAd, lunchStartAt, lunchEndsAt))
                 return false;
 
-            if (IsCurrentSlotBusy(slotToAd, day.BusySlots))
+            if (IsCurrentSlotBusy(dayOfWeekInfo, slotToAd))
                 return false;
 
             return true;
         }
 
 
-        private void ThrowExceptionIsNotValidDataDay(
-            DayOfWeekInfo day, 
-            int slotDurationMinutes)
+        private void ThrowExceptionIsNotValidDataDay(DayOfWeekInfo day)
         {
             Condition.Requires(day, "dayOfWeek")
                 .IsNotNull();
@@ -131,10 +140,7 @@ namespace ScheduleAppointment.API.Factories.Impl
         }
 
 
-        private bool IsCurrentSlotBetweenLunchTime(
-            TimeSpan availableSlot, 
-            TimeSpan lunchStart, 
-            TimeSpan lunchEnd)
+        private bool IsCurrentSlotBetweenLunchTime(DateTime availableSlot, DateTime lunchStart, DateTime lunchEnd)
         {
             if (availableSlot >= lunchStart && availableSlot < lunchEnd)
                 return true;
@@ -143,36 +149,22 @@ namespace ScheduleAppointment.API.Factories.Impl
         }
 
 
-        private bool IsCurrentSlotBusy(TimeSpan availableSlot, List<BusySlot> busySlots)
+        private bool IsCurrentSlotBusy(DayOfWeekInfo dayOfWeekInfo, DateTime availableSlot)
         {
-            if (busySlots == null)
+            if (dayOfWeekInfo.BusySlots == null)
                 return false;
 
-            return ExistStartSlotInListOfBusySlots(availableSlot, busySlots);
+            return (dayOfWeekInfo.BusySlots.Exists(x => availableSlot == GetDateTimeFrom(dayOfWeekInfo, x.Start.Hour, x.Start.Minute)));
         }
 
 
-        private bool ExistStartSlotInListOfBusySlots(TimeSpan availableSlot, List<BusySlot> busySlots)
+        private DateTime GetDateTimeFrom(DayOfWeekInfo dayOfWeekInfo, int hour, int minute)
         {
-            return (busySlots.Exists(isBetween => availableSlot == CreateTimeSpanFromHourAndMinute(isBetween.Start.Hour, isBetween.Start.Minute)));
-        }
-
-
-        private TimeSpan CreateTimeSpanFromHour(int hour)
-        {
-            return TimeSpan.FromHours(hour);
-        }
-
-
-        private TimeSpan CreateTimeSpanFromHourAndMinute(int hour, int minute)
-        {
-            return new TimeSpan(hour, minute, 0);
-        }
-
-
-        private DateTime CreateDateTimeFromHour(int hour)
-        {
-            return new DateTime(1, 1, 1, hour, 0, 0);
+            return new DateTime(
+                dayOfWeekInfo.CurrentDate.Year,
+                dayOfWeekInfo.CurrentDate.Month,
+                dayOfWeekInfo.CurrentDate.Day,
+                hour, minute, 0);
         }
     }
 }

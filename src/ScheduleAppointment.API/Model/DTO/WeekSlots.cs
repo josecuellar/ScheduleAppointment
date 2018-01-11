@@ -81,12 +81,12 @@ namespace ScheduleAppointment.API.Model.DTO
         public TimeSpan End { get; private set; }
 
 
-        public IntervalSlot(TimeSpan start, int slotDurationMinutes)
+        public IntervalSlot(DateTime start, int slotDurationMinutes)
         {
-            this.Start = start;
-            this.End = new DateTime(1, 1, 1, start.Hours, start.Minutes, 0)
-                .AddMinutes(slotDurationMinutes)
-                .TimeOfDay;
+            this.Start = start.TimeOfDay;
+            this.End = new DateTime(start.Year, start.Month, start.Day, start.Hour, start.Minute, 0)
+                            .AddMinutes(slotDurationMinutes)
+                            .TimeOfDay;
         }
     }
 }
