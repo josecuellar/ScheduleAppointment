@@ -9,6 +9,7 @@ using ScheduleAppointment.API.Providers;
 using ScheduleAppointment.API.Providers.Impl;
 using ScheduleAppointment.API.Services;
 using ScheduleAppointment.API.Services.Impl;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace ScheduleAppointment.API
 {
@@ -29,6 +30,11 @@ namespace ScheduleAppointment.API
             services.AddTransient<ILoggerProvider, ConsoleLoggerProvider>();
             services.AddTransient<IHttpClientProvider, HttpClientProvider>();
             services.AddTransient<IFactory<AvailabilityWeek, WeekSlots>, WeekSlotsFactory>();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "API Appointments", Version = "v1" });
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -37,6 +43,15 @@ namespace ScheduleAppointment.API
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "API Appointments v1");
+            });
 
             app.UseMvc();
         }

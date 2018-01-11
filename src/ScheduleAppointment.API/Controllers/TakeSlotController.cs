@@ -26,7 +26,7 @@ namespace ScheduleAppointment.API.Controllers
 
         [HttpPost]
         [Route("api/availability/takeslot")]
-        public async Task<IActionResult> Post([FromBody] Appointment appointment)
+        public async Task<IActionResult> Post(Appointment appointment)
         {
             try
             {
