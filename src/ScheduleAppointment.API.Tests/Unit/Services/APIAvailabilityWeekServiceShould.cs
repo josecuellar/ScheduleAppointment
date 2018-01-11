@@ -5,7 +5,6 @@ using ScheduleAppointment.API.Model.DTO;
 using ScheduleAppointment.API.Providers;
 using ScheduleAppointment.API.Services.Impl;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ScheduleAppointment.API.Tests.Unit.Services
@@ -21,6 +20,7 @@ namespace ScheduleAppointment.API.Tests.Unit.Services
         private Mock<IFactory<AvailabilityWeek, WeekSlots>> _weekSlotsFactory;
 
         private const string validJSON = "{'Facility':{'Name':'Las Palmeras','Address':'Plaza de la independencia 36, 38006 Santa Cruz de Tenerife'},'SlotDurationMinutes':10,'Monday':{'WorkPeriod':{'StartHour':9,'EndHour':17,'LunchStartHour':13,'LunchEndHour':14}},'Wednesday':{'WorkPeriod':{'StartHour':9,'EndHour':17,'LunchStartHour':13,'LunchEndHour':14}},'Friday':{'WorkPeriod':{'StartHour':8,'EndHour':16,'LunchStartHour':13,'LunchEndHour':14}}}";
+
 
         private APIAvailabilityWeekService _service;
 
@@ -51,7 +51,7 @@ namespace ScheduleAppointment.API.Tests.Unit.Services
                 .Returns(WeekSlots.CreateAllDaysOfWeekWithNoAvailability());
 
             _service = new APIAvailabilityWeekService(
-                                _httpClientProviderMock.Object, 
+                                _httpClientProviderMock.Object,
                                 _loggerProvider.Object,
                                 _weekSlotsFactory.Object);
         }
@@ -188,6 +188,43 @@ namespace ScheduleAppointment.API.Tests.Unit.Services
             Assert.IsTrue(result.Monday.WorkPeriod.LunchEndHour == 14
                 && result.Wednesday.WorkPeriod.LunchEndHour == 14
                 && result.Friday.WorkPeriod.LunchEndHour == 14);
+        }
+
+
+        [Test]
+        public async Task Catch_and_log_exception_when_error_occurred_calling_to_take_slot_api_method()
+        {
+            // Arrange
+            var exception = new Exception();
+
+            _httpClientProviderMock
+                .Setup(m => m.PostAsync(It.IsAny<string>(), It.IsAny<Appointment>()))
+                .ThrowsAsync(exception);
+
+            // Act
+            try
+            {
+                await _service.TakeAppointment(It.IsAny<Appointment>());
+                Assert.Fail();
+            }
+            catch (Exception)
+            { }
+
+            // Assert
+            _loggerProvider.Verify(m => m.Log(exception), Times.Once);
+        }
+
+
+        [Test]
+        public async Task Verify_correct_configuration_request_for_take_slot_api_method()
+        {
+            // Act
+            await _service.TakeAppointment(VALID_SLOT_STUB);
+
+            // Assert
+            _httpClientProviderMock.Verify(m => m.CreateClient(URL_CLIENT), Times.Once);
+            _httpClientProviderMock.Verify(m => m.WithBasicAuthenticator(USER, PSW), Times.Once);
+            _httpClientProviderMock.Verify(m => m.PostAsync(REQUEST_TAKESLOT, VALID_SLOT_STUB), Times.Once);
         }
     }
 }

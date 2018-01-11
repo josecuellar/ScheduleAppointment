@@ -14,8 +14,7 @@ namespace ScheduleAppointment.API.Tests.Integration
     public class AvailableWeekSlotsShould
     {
 
-
-        private const string AVAILABILITY_WEEK_SLOTS_METHOD = "/api/AvailableWeekSlots";
+        private const string AVAILABILITY_WEEK_SLOTS_METHOD = "/api/availability/week";
 
         private readonly TestServer _server;
 

@@ -25,7 +25,7 @@ namespace ScheduleAppointment.API.Controllers
 
 
         [HttpGet]
-        [Route("api/AvailableWeekSlots/{dayOfStartWeek?}")]
+        [Route("api/availability/week/{dayOfStartWeek?}")]
         public async Task<IActionResult> List(string dayOfStartWeek)
         {
             try

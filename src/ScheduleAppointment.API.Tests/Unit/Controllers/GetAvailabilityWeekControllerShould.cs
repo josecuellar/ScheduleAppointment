@@ -11,12 +11,13 @@ using System.Threading.Tasks;
 namespace ScheduleAppointment.API.Tests.Unit.Controllers
 {
     [TestFixture(Category = "Unit Tests")]
-    public class GetAvailabilityWeekControllerShould 
+    public class GetAvailabilityWeekControllerShould : UnitTestBase
     {
 
 
         private Mock<ILoggerProvider> _loggerProviderMock;
         private Mock<IAvailabilityWeekService> _availabilityWeekServiceMock;
+
         private GetAvailabilityWeekController _controller;
 
 

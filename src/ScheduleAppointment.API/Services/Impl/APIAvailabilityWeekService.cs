@@ -12,6 +12,7 @@ namespace ScheduleAppointment.API.Services.Impl
 
         public const string URL_CLIENT = "https://test.draliacloud.net/api/";
         public const string REQUEST_TEMPLATE = "availability/GetWeeklyAvailability/{0}";
+        public const string TAKE_APPOINTMENT = "availability/TakeSlot";
         public const string USER = "techuser";
         public const string PSW = "secretpassWord";
 
@@ -22,13 +23,30 @@ namespace ScheduleAppointment.API.Services.Impl
 
 
         public APIAvailabilityWeekService(
-            IHttpClientProvider httpClientProvider, 
+            IHttpClientProvider httpClientProvider,
             ILoggerProvider loggerProvider,
             IFactory<AvailabilityWeek, WeekSlots> weekSlotsFactory)
         {
             _httpClientProvider = httpClientProvider;
             _loggerProvider = loggerProvider;
             _weekSlotsFactory = weekSlotsFactory;
+        }
+
+
+        public async Task TakeAppointment(Appointment takeSlot)
+        {
+            try
+            {
+                await _httpClientProvider
+                        .CreateClient(URL_CLIENT)
+                        .WithBasicAuthenticator(USER, PSW)
+                        .PostAsync(TAKE_APPOINTMENT, takeSlot);
+            }
+            catch (Exception err)
+            {
+                await _loggerProvider.Log(err);
+                throw (err);
+            }
         }
 
 
@@ -61,10 +79,10 @@ namespace ScheduleAppointment.API.Services.Impl
                     return new AvailabilityWeek();
 
                 return JsonConvert.DeserializeObject<AvailabilityWeek>(jsonString, new JsonSerializerSettings
-                                                                                                {
-                                                                                                    NullValueHandling = NullValueHandling.Ignore,
-                                                                                                    MissingMemberHandling = MissingMemberHandling.Ignore
-                                                                                                });
+                {
+                    NullValueHandling = NullValueHandling.Ignore,
+                    MissingMemberHandling = MissingMemberHandling.Ignore
+                });
 
             }
             catch (Exception err)

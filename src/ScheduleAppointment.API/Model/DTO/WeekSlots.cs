@@ -52,7 +52,7 @@ namespace ScheduleAppointment.API.Model.DTO
     {
 
 
-        public List<TimeSpan> AvailableSlots { get; private set; }
+        public List<IntervalSlot> AvailableSlots { get; private set; }
 
 
         public static DaySlots CreateDayWithNoAvailability()
@@ -63,13 +63,30 @@ namespace ScheduleAppointment.API.Model.DTO
 
         public DaySlots()
         {
-            this.AvailableSlots = new List<TimeSpan>();
+            this.AvailableSlots = new List<IntervalSlot>();
         }
 
 
-        public DaySlots(List<TimeSpan> slots)
+        public DaySlots(List<IntervalSlot> slots)
         {
             this.AvailableSlots = slots;
+        }
+    }
+
+
+    public class IntervalSlot
+    {
+        public TimeSpan Start { get; private set; }
+
+        public TimeSpan End { get; private set; }
+
+
+        public IntervalSlot(TimeSpan start, int slotDurationMinutes)
+        {
+            this.Start = start;
+            this.End = new DateTime(1, 1, 1, start.Hours, start.Minutes, 0)
+                .AddMinutes(slotDurationMinutes)
+                .TimeOfDay;
         }
     }
 }

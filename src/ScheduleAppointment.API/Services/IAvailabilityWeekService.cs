@@ -8,6 +8,8 @@ namespace ScheduleAppointment.API.Services
     {
         Task<AvailabilityWeek> GetAvailabilityWeekData(DateTime dayOfStartWeek);
 
+        Task TakeAppointment(Appointment appointment);
+
         Task<WeekSlots> GetAvailabilitySlots(DateTime dayOfStartWeek);
     }
 }

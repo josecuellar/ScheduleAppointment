@@ -85,5 +85,26 @@ namespace ScheduleAppointment.API.Tests.Unit.Providers
             // Assert
             _loggerProvider.Verify(m => m.Log(It.IsAny<Exception>()), Times.Once);
         }
+
+
+        [TestCase("")]
+        [TestCase(null)]
+        public async Task Catch_and_log_exception_when_post_appointment_with_invalid_request(string request)
+        {
+            // Act
+            try
+            {
+                await _provider.CreateClient(URL_CLIENT)
+                            .WithBasicAuthenticator(USER, PSW)
+                            .PostAsync<Appointment>(request, new Appointment());
+
+                Assert.Fail();
+            }
+            catch (Exception)
+            { }
+
+            // Assert
+            _loggerProvider.Verify(m => m.Log(It.IsAny<Exception>()), Times.Once);
+        }
     }
 }

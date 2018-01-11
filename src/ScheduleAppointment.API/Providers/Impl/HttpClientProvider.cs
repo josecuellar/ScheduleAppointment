@@ -90,5 +90,34 @@ namespace ScheduleAppointment.API.Providers.Impl
                 throw (err);
             }
         }
+
+
+        public async Task PostAsync<T>(string url, T objectToSend) where T : class
+        {
+            try
+            {
+                Condition.Requires(url)
+                    .IsNotNullOrEmpty("url method for httpClient is mandatory");
+
+                Condition.Requires(objectToSend)
+                    .IsNotNull<T>("object to send is mandatory");
+
+                using (_client)
+                {
+                    var json = JsonConvert.SerializeObject(objectToSend);
+                    var buffer = Encoding.UTF8.GetBytes(json);
+                    var byteContent = new ByteArrayContent(buffer);
+
+                    byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+                    await _client.PostAsync(url, byteContent);
+                }
+            }
+            catch (Exception err)
+            {
+                await _loggerProvider.Log(err);
+                throw (err);
+            }
+        }
     }
 }

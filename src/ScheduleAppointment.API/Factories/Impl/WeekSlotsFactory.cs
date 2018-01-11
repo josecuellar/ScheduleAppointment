@@ -72,7 +72,7 @@ namespace ScheduleAppointment.API.Factories.Impl
                 ThrowExceptionIsNotValidDataDay(dayOfWeekInfo, slotDurationMinutes);
 
 
-                var availableSlots = new List<TimeSpan>();
+                var availableSlots = new List<IntervalSlot>();
 
                 var workStartAt = CreateDateTimeFromHour(dayOfWeekInfo.WorkPeriod.StartHour);
                 var workEndsAt = CreateDateTimeFromHour(dayOfWeekInfo.WorkPeriod.EndHour);
@@ -82,13 +82,13 @@ namespace ScheduleAppointment.API.Factories.Impl
 
                 while (workStartAt != workEndsAt)
                 {
-                    int minuts = +slotDurationMinutes;
-                    workStartAt = workStartAt.AddMinutes(minuts);
+                    int minutes = +slotDurationMinutes;
+                    workStartAt = workStartAt.AddMinutes(minutes);
 
                     var slotToAdd = CreateTimeSpanFromHourAndMinute(workStartAt.Hour, workStartAt.Minute);
 
                     if (IsAvailableSlot(slotToAdd, dayOfWeekInfo, workStartAt, lunchStartAt, lunchEndsAt))
-                        availableSlots.Add(slotToAdd);
+                        availableSlots.Add(new IntervalSlot(slotToAdd, slotDurationMinutes));
                 }
 
                 return new DaySlots(availableSlots);
@@ -160,7 +160,7 @@ namespace ScheduleAppointment.API.Factories.Impl
 
         private TimeSpan CreateTimeSpanFromHour(int hour)
         {
-            return new TimeSpan(hour, 0, 0);
+            return TimeSpan.FromHours(hour);
         }
 
 

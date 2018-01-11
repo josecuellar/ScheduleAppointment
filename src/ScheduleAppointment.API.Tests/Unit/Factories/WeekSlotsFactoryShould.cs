@@ -80,10 +80,9 @@ namespace ScheduleAppointment.API.Tests.Unit.Factories
             });
 
             // Assert
-            Assert.IsFalse(GetDaySlotsFromIndex(0, result).Contains(new TimeSpan(10, 0, 0)));
-            Assert.IsFalse(GetDaySlotsFromIndex(0, result).Contains(new TimeSpan(12, 0, 0)));
-
-            Assert.IsTrue(GetDaySlotsFromIndex(0, result).Contains(new TimeSpan(11, 0, 0)));
+            Assert.IsTrue(GetDaySlotsFromIndex(0, result).Exists(x => x.Start == new TimeSpan(11, 0, 0)));
+            Assert.IsFalse(GetDaySlotsFromIndex(0, result).Exists(x => x.Start == new TimeSpan(10, 0, 0)));
+            Assert.IsFalse(GetDaySlotsFromIndex(0, result).Exists(x => x.Start == new TimeSpan(12, 0, 0)));
         }
 
 
@@ -107,9 +106,9 @@ namespace ScheduleAppointment.API.Tests.Unit.Factories
             });
 
             // Assert
-            Assert.IsFalse(GetDaySlotsFromIndex(0, result).Contains(new TimeSpan(14, 0, 0)));
-            Assert.IsFalse(GetDaySlotsFromIndex(0, result).Contains(new TimeSpan(15, 0, 0)));
-            Assert.IsTrue(GetDaySlotsFromIndex(0, result).Contains(new TimeSpan(16, 0, 0)));
+            Assert.IsTrue(GetDaySlotsFromIndex(0, result).Exists(x => x.Start == new TimeSpan(16, 0, 0)));
+            Assert.IsFalse(GetDaySlotsFromIndex(0, result).Exists(x => x.Start == new TimeSpan(14, 0, 0)));
+            Assert.IsFalse(GetDaySlotsFromIndex(0, result).Exists(x => x.Start == new TimeSpan(15, 0, 0)));
         }
 
 
@@ -122,7 +121,7 @@ namespace ScheduleAppointment.API.Tests.Unit.Factories
         }
 
 
-        private List<TimeSpan> GetDaySlotsFromIndex(int indexToGet, WeekSlots weekSlots)
+        private List<IntervalSlot> GetDaySlotsFromIndex(int indexToGet, WeekSlots weekSlots)
         {
             return weekSlots.ConsecutiveDaysOfWeek[indexToGet].AvailableSlots;
         }
