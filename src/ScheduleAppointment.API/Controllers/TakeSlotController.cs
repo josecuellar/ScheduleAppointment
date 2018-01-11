@@ -38,7 +38,7 @@ namespace ScheduleAppointment.API.Controllers
 
                 await _availabilityWeekService.TakeAppointment(appointment);
 
-                return Created("api/AvailableWeekSlots", appointment);
+                return Created("api/availability/takeslot", appointment);
             }
             catch (Exception err)
             {

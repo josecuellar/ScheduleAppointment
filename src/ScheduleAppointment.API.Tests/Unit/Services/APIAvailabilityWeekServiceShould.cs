@@ -48,7 +48,7 @@ namespace ScheduleAppointment.API.Tests.Unit.Services
 
             _weekSlotsFactory
                 .Setup(m => m.From(It.IsAny<AvailabilityWeek>()))
-                .Returns(WeekSlots.CreateAllDaysOfWeekWithNoAvailability());
+                .Returns(WeekSlots.CreateAllDaysOfWeekWithNoAvailability(It.IsAny<DateTime>()));
 
             _service = new APIAvailabilityWeekService(
                                 _httpClientProviderMock.Object,

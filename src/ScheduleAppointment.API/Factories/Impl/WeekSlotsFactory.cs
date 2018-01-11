@@ -27,13 +27,13 @@ namespace ScheduleAppointment.API.Factories.Impl
         {
             try
             {
-                Condition.Requires(weekData.SlotDurationMinutes, "slotDurationMinutes")
+                _weekData = weekData;
+
+                Condition.Requires(_weekData.SlotDurationMinutes, "slotDurationMinutes")
                     .IsGreaterThan(0)
                     .IsLessThan(120);
 
                 var weekSlots = new WeekSlots();
-
-                _weekData = weekData;
 
                 foreach (var day in Enum.GetValues(typeof(DayOfWeek))
                                   .OfType<DayOfWeek>()
@@ -55,7 +55,7 @@ namespace ScheduleAppointment.API.Factories.Impl
             catch (Exception err)
             {
                 _loggerProvider.Log(err);
-                return WeekSlots.CreateAllDaysOfWeekWithNoAvailability();
+                return WeekSlots.CreateAllDaysOfWeekWithNoAvailability(_weekData.DayOfMonday);
             }
         }
 
@@ -65,7 +65,7 @@ namespace ScheduleAppointment.API.Factories.Impl
             if (day == DayOfWeek.Monday)
                 dayOfWeekInfo.CurrentDate = _weekData.DayOfMonday;
             else
-                dayOfWeekInfo.CurrentDate = _weekData.DayOfMonday.AddDays(1);
+                dayOfWeekInfo.CurrentDate = _weekData.DayOfMonday.AddDays(((int)day + 6) % 7);
         }
 
 
@@ -107,12 +107,12 @@ namespace ScheduleAppointment.API.Factories.Impl
                     workStartAt = workStartAt.AddMinutes(minutes);
                 }
 
-                return new DaySlots(availableSlots);
+                return new DaySlots(dayOfWeekInfo.CurrentDate, availableSlots);
             }
             catch (Exception err)
             {
                 _loggerProvider.Log(err);
-                return DaySlots.CreateDayWithNoAvailability();
+                return DaySlots.CreateDayWithNoAvailability(dayOfWeekInfo.CurrentDate);
             }
         }
 

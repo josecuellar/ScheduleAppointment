@@ -112,6 +112,42 @@ namespace ScheduleAppointment.API.Tests.Unit.Factories
         }
 
 
+        [Test]
+        public void Return_correct_consecutive_date_days_when_change_year_in_that_week()
+        {
+            // Arrange
+            var dto = new Model.DTO.AvailabilityWeek()
+            {
+                DayOfMonday = new DateTime(2018, 12, 31)
+            };
+
+            // Act
+            var result = _factory.From(dto);
+
+            // Assert
+            Assert.AreEqual(result.ConsecutiveDaysOfWeek[0].CurrentDate, dto.DayOfMonday);
+            Assert.AreEqual(result.ConsecutiveDaysOfWeek[6].CurrentDate, new DateTime(2019, 1, 6));
+        }
+
+
+        [Test]
+        public void Return_correct_consecutive_date_days_when_change_month_in_that_week()
+        {
+            // Arrange
+            var dto = new Model.DTO.AvailabilityWeek()
+            {
+                DayOfMonday = new DateTime(2018, 1, 29)
+            };
+
+            // Act
+            var result = _factory.From(dto);
+
+            // Assert
+            Assert.AreEqual(result.ConsecutiveDaysOfWeek[0].CurrentDate, dto.DayOfMonday);
+            Assert.AreEqual(result.ConsecutiveDaysOfWeek[6].CurrentDate, new DateTime(2018, 2, 4));
+        }
+
+
         private void AssertValidWeekSlotsWithNoAvailability(WeekSlots result)
         {
             Assert.AreEqual(result.ConsecutiveDaysOfWeek.Count, 7);
