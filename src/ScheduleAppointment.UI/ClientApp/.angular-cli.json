@@ -13,7 +13,7 @@
       "tsconfig": "tsconfig.app.json",
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
-      "styles": ["../node_modules/bootstrap/dist/css/bootstrap.min.css"],
+      "styles": [ "../node_modules/bootstrap/dist/css/bootstrap.min.css", "../node_modules/angular-calendar/css/angular-calendar.css" ],
       "scripts": []
     }
   ],

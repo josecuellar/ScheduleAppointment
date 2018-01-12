@@ -4,22 +4,26 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
+import { CalendarModule } from 'angular-calendar';
 
-import { WeekViewComponent } from './week-view/week-view.component';
+import { CalendarWeekViewComponent } from './calendar-week-view/calendar-week-view.component';
+
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    WeekViewComponent
-  ],
-  imports: [
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
-    HttpClientModule,
-    FormsModule,
-    RouterModule.forRoot([
-      { path: '', component: WeekViewComponent },
-    ])
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        CalendarWeekViewComponent
+    ],
+    imports: [
+        BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+        HttpClientModule,
+        FormsModule,
+        CalendarModule.forRoot(),
+        RouterModule.forRoot([
+            { path: '', component: CalendarWeekViewComponent },
+        ])
+    ],
+    bootstrap: [AppComponent]
 })
+
 export class AppModule { }
