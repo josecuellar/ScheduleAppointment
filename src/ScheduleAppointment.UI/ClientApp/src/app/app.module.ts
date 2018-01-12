@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
+
 import { WeekViewComponent } from './week-view/week-view.component';
 
 @NgModule({
@@ -19,7 +20,6 @@ import { WeekViewComponent } from './week-view/week-view.component';
       { path: '', component: WeekViewComponent },
     ])
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
