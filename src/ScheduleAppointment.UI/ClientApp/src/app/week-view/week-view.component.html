@@ -1,0 +1,28 @@
+<h1>Availability Week View</h1>
+
+<p *ngIf="!availableWeekSlots"><em>Loading...</em></p>
+
+<table class='table' *ngIf="availableWeekSlots">
+  <thead>
+    <tr>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let availableWeekSlot of availableWeekSlots">
+      <td>{{ availableWeekSlot.day1 }}</td>
+      <td>{{ availableWeekSlot.day2 }}</td>
+      <td>{{ availableWeekSlot.day3 }}</td>
+      <td>{{ availableWeekSlot.day4 }}</td>
+      <td>{{ availableWeekSlot.day5 }}</td>
+      <td>{{ availableWeekSlot.day6 }}</td>
+      <td>{{ availableWeekSlot.day7 }}</td>
+    </tr>
+  </tbody>
+</table>
