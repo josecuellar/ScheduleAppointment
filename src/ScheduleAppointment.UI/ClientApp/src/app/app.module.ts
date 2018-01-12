@@ -4,8 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
-import { CalendarModule } from 'angular-calendar';
-
 import { CalendarWeekViewComponent } from './calendar-week-view/calendar-week-view.component';
 
 
@@ -18,7 +16,6 @@ import { CalendarWeekViewComponent } from './calendar-week-view/calendar-week-vi
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
         HttpClientModule,
         FormsModule,
-        CalendarModule.forRoot(),
         RouterModule.forRoot([
             { path: '', component: CalendarWeekViewComponent },
         ])
