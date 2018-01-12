@@ -64,6 +64,7 @@ namespace ScheduleAppointment.API.Tests.Unit.Factories
             var result = _factory.From(new Model.DTO.AvailabilityWeek()
             {
                 SlotDurationMinutes = 60,
+                DayOfMonday = new DateTime(2018, 1, 1),
                 Monday = new DayOfWeekInfo()
                 {
                     WorkPeriod = new WorkPeriod()
@@ -80,9 +81,9 @@ namespace ScheduleAppointment.API.Tests.Unit.Factories
             });
 
             // Assert
-            Assert.IsTrue(GetDaySlotsFromIndex(0, result).Exists(x => x.Start == new TimeSpan(11, 0, 0)));
-            Assert.IsFalse(GetDaySlotsFromIndex(0, result).Exists(x => x.Start == new TimeSpan(10, 0, 0)));
-            Assert.IsFalse(GetDaySlotsFromIndex(0, result).Exists(x => x.Start == new TimeSpan(12, 0, 0)));
+            Assert.IsTrue(GetDaySlotsFromIndex(0, result).Exists(x => x.Start.Hour == 11 && x.Start.Minute == 0));
+            Assert.IsFalse(GetDaySlotsFromIndex(0, result).Exists(x => x.Start.Hour == 10 && x.Start.Minute == 0));
+            Assert.IsFalse(GetDaySlotsFromIndex(0, result).Exists(x => x.Start.Hour == 12 && x.Start.Minute == 0));
         }
 
 
@@ -93,6 +94,7 @@ namespace ScheduleAppointment.API.Tests.Unit.Factories
             var result = _factory.From(new Model.DTO.AvailabilityWeek()
             {
                 SlotDurationMinutes = 60,
+                DayOfMonday = new DateTime(2018, 1, 1),
                 Monday = new DayOfWeekInfo()
                 {
                     WorkPeriod = new WorkPeriod()
@@ -106,9 +108,9 @@ namespace ScheduleAppointment.API.Tests.Unit.Factories
             });
 
             // Assert
-            Assert.IsTrue(GetDaySlotsFromIndex(0, result).Exists(x => x.Start == new TimeSpan(16, 0, 0)));
-            Assert.IsFalse(GetDaySlotsFromIndex(0, result).Exists(x => x.Start == new TimeSpan(14, 0, 0)));
-            Assert.IsFalse(GetDaySlotsFromIndex(0, result).Exists(x => x.Start == new TimeSpan(15, 0, 0)));
+            Assert.IsFalse(GetDaySlotsFromIndex(0, result).Exists(x => x.Start.Hour == 14 && x.Start.Minute == 0));
+            Assert.IsFalse(GetDaySlotsFromIndex(0, result).Exists(x => x.Start.Hour == 15 && x.Start.Minute == 0));
+            Assert.IsTrue(GetDaySlotsFromIndex(0, result).Exists(x => x.Start.Hour == 16 && x.Start.Minute == 0));
         }
 
 

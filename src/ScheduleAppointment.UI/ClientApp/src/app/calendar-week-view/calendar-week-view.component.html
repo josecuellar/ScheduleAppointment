@@ -1,3 +1,31 @@
-<div>
-    1
+
+<nav>
+    <ul class="pagination pagination-sm">
+        <li class="page-item">
+            <a class="page-link" href="#" (click)="PreviousMonday()">Previous</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="#" (click)="NextMonday()">Next</a>
+        </li>
+    </ul>
+</nav>
+
+<div class="items">
+    <div class="item" *ngFor="let daySlot of daySlots">
+        <div class="panel panel-default">
+            <div class="panel-body bg-info">
+                <h4>{{daySlot.currentDate | date:'EEEE':'':'es' | uppercase}}</h4>
+                <h6 [ngClass]="{
+                                    'text-success':daySlot.availableSlots.length > 0, 
+                                    'text-danger':daySlot.availableSlots.length === 0
+                                }">
+                    {{daySlot.currentDate | date: 'dd/MM/yyyy'}}
+                </h6>
+            </div>
+            <div class="panel-body" *ngFor="let slot of daySlot.availableSlots">
+                <a class="btn btn-block btn-success" href="#">{{slot.start | date: 'HH:mm'}}</a>
+            </div>
+        </div>
+    </div>
 </div>
+

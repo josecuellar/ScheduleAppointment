@@ -5,13 +5,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { CalendarWeekViewComponent } from './calendar-week-view/calendar-week-view.component';
-
+import { Globals } from './app.globals'
 
 @NgModule({
     declarations: [
         AppComponent,
         CalendarWeekViewComponent
     ],
+    providers:[ Globals ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
         HttpClientModule,

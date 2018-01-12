@@ -1,0 +1,13 @@
+.items {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+    .items .item {
+        flex: 1 0 10%;
+        box-sizing: border-box;
+        color: #171e42;
+        padding: 10px;
+    }
+
+

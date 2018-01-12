@@ -26,6 +26,15 @@ namespace ScheduleAppointment.API
         {
             services.AddMvc();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins", builder => {
+                    builder.AllowAnyOrigin();
+                    builder.AllowAnyMethod();
+                    builder.AllowAnyHeader();
+                });
+            });
+
             services.AddTransient<IAvailabilityWeekService, APIAvailabilityWeekService>();
             services.AddTransient<ILoggerProvider, ConsoleLoggerProvider>();
             services.AddTransient<IHttpClientProvider, HttpClientProvider>();
@@ -43,6 +52,8 @@ namespace ScheduleAppointment.API
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors("AllowAllOrigins");
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
