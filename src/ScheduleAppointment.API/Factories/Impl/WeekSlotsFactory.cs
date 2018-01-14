@@ -46,7 +46,7 @@ namespace ScheduleAppointment.API.Factories.Impl
 
                     var daySlots = SplitDayInSlots(dayOfWeek);
 
-                    weekSlots.AddDayToWeek(daySlots);
+                    weekSlots.AddDayToWeek(_weekData.Facility.FacilityId, daySlots);
                 }
 
                 return weekSlots;
@@ -55,7 +55,7 @@ namespace ScheduleAppointment.API.Factories.Impl
             catch (Exception err)
             {
                 _loggerProvider.Log(err);
-                return WeekSlots.CreateAllDaysOfWeekWithNoAvailability(_weekData.DayOfMonday);
+                return WeekSlots.CreateAllDaysOfWeekWithNoAvailability(_weekData.Facility.FacilityId, _weekData.DayOfMonday);
             }
         }
 

@@ -1,11 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Globals } from '../app.globals';
-
 import { registerLocaleData } from '@angular/common';
-import localeEs from '@angular/common/locales/es';
-
-
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
     selector: 'calendar-week-view',
@@ -13,15 +11,22 @@ import localeEs from '@angular/common/locales/es';
     templateUrl: './calendar-week-view.component.html',
     styleUrls: ['./calendar-week-view.component.css']
 })
-export class CalendarWeekViewComponent {
+export class CalendarWeekViewComponent
+{
 
     daySlots: DaySlot[];
     private httpClient: HttpClient;
     private globalsApp: Globals;
 
-    constructor(http: HttpClient, private globals: Globals) {
+    facilityId: string;
+    namePatient: string;
+    surnamesPatient: string;
+    emailPatient: string;
+    commentsPatient: string;
+    phonePatient: number;
+    slot: Interval;
 
-        registerLocaleData(localeEs);
+    constructor(public dialog: MatDialog, http: HttpClient, private globals: Globals) {
 
         this.globalsApp = globals;
         this.httpClient = http;
@@ -33,14 +38,17 @@ export class CalendarWeekViewComponent {
         this.FetchDataAPI();
     }
 
-    FetchDataAPI()
-    {
+    FetchDataAPI() {
         var mondayFormattedForAPI = this.globalsApp.CURRENT_DATE.getFullYear().toString() +
             ("0" + (this.globalsApp.CURRENT_DATE.getMonth() + 1)).slice(-2) +
             ("0" + (this.globalsApp.CURRENT_DATE.getDate())).slice(-2);
 
         this.httpClient.get<AvailabilityWeekSlots>(this.globalsApp.API_METHOD_AVAILABILITY_WEEK + mondayFormattedForAPI)
             .subscribe(result => {
+
+                console.log(result);
+
+                this.facilityId = result.facilityId;
                 this.daySlots = result.consecutiveDaysOfWeek;
             }, error => console.error(error));
     }
@@ -62,6 +70,49 @@ export class CalendarWeekViewComponent {
         var day = d.getDay(), diff = d.getDate() - day + (day == 0 ? -6 : 1);
         return new Date(d.setDate(diff));
     }
+
+    openDialog(selectedSlot): void
+    {
+        this.slot = selectedSlot;
+
+        let dialogRef = this.dialog.open(TakeSlotFormModal, {
+            maxWidth: '250px',
+            height:'500px',
+            data: {
+                facilityId: this.facilityId,
+                slot: this.slot,
+                namePatient: this.namePatient,
+                emailPatient: this.emailPatient,
+                surnamesPatient: this.surnamesPatient,
+                phonePatient: this.phonePatient,
+                commentsPatient: this.commentsPatient
+            }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+
+            this.httpClient.post(this.globalsApp.API_METHOD_TAKE_SLOT,
+                {
+                    FacilityId: result.facilityId,
+                    Start: result.slot.start,
+                    End: result.slot.end,
+                    Comments: result.commentsPatient,
+                    Patient:
+                    {
+                        Email: result.emailPatient,
+                        Name: result.namePatient,
+                        SecondName: result.surnamesPatient,
+                        Phone: result.phonePatient
+                    }
+                })
+                .subscribe(result => {
+
+                    this.FetchDataAPI();
+
+                }, error => console.error(error));
+
+        });
+    }
 }
 
 interface Interval
@@ -72,6 +123,7 @@ interface Interval
 
 interface AvailabilityWeekSlots
 {
+    facilityId: string;
     consecutiveDaysOfWeek: DaySlot[];
 }
 
@@ -79,4 +131,20 @@ interface DaySlot
 {
     availableSlots: Interval[];
     currentDate: Date;
+}
+
+@Component({
+    selector: 'take-slot-form-modal',
+    templateUrl: 'take-slot.form.modal.html',
+})
+export class TakeSlotFormModal {
+
+    constructor(
+        public dialogRef: MatDialogRef<TakeSlotFormModal>,
+        @Inject(MAT_DIALOG_DATA) public data: any) { }
+
+    onNoClick(): void {
+        this.dialogRef.close();
+    }
+
 }

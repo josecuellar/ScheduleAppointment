@@ -7,16 +7,19 @@ namespace ScheduleAppointment.API.Model.DTO
     public class WeekSlots
     {
 
+        public Guid FacilityId { get; private set; }
+
 
         public List<DaySlots> ConsecutiveDaysOfWeek { get; private set; }
 
 
-        public static WeekSlots CreateAllDaysOfWeekWithNoAvailability(DateTime dtMonday)
+        public static WeekSlots CreateAllDaysOfWeekWithNoAvailability(Guid facilityId, DateTime dtMonday)
         {
             var weekWithNoAvailability = new WeekSlots();
 
             return new WeekSlots()
             {
+                FacilityId = facilityId,
                 ConsecutiveDaysOfWeek = new List<DaySlots>()
                                         {
                                             DaySlots.CreateDayWithNoAvailability(dtMonday),
@@ -33,18 +36,21 @@ namespace ScheduleAppointment.API.Model.DTO
 
         public WeekSlots()
         {
+            FacilityId = new Guid();
             this.ConsecutiveDaysOfWeek = new List<DaySlots>();
         }
 
 
-        public WeekSlots(List<DaySlots> daySlots)
+        public WeekSlots(Guid facilityId, List<DaySlots> daySlots)
         {
+            FacilityId = facilityId;
             this.ConsecutiveDaysOfWeek = daySlots;
         }
 
 
-        public void AddDayToWeek(DaySlots daySlots)
+        public void AddDayToWeek(Guid facilityId, DaySlots daySlots)
         {
+            FacilityId = facilityId;
             this.ConsecutiveDaysOfWeek.Add(daySlots);
         }
     }

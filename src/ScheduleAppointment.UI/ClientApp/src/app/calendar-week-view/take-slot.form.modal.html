@@ -1,0 +1,43 @@
+<h1 mat-dialog-title>
+    <b>{{ data.slot.start | date: 'HH:mm'}} - {{ data.slot.end | date: 'HH:mm'}}</b>
+    <br />
+    {{ data.slot.start | date: 'dd/MM/yyyy'}}
+</h1>
+<div mat-dialog-content>
+
+
+    <mat-form-field>
+        <input matInput [(ngModel)]="data.namePatient" placeholder="Nombre" required>
+        <mat-error>Your name is mandatory</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput [(ngModel)]="data.surnamesPatient" placeholder="Apellidos">
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="Your email" [(ngModel)]="data.emailPatient">
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="Your phone" [(ngModel)]="data.phonePatient" required>
+        <mat-error>
+            Please enter your phone
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <textarea matInput placeholder="Comentarios" [(ngModel)]="data.commentsPatient"></textarea>
+    </mat-form-field>
+
+</div>
+
+
+<div mat-dialog-actions>
+    <button mat-button color="accent" (click)="onNoClick()">Cancel</button>&nbsp;
+
+    <div *ngIf="data.namePatient && !data.namePatient.invalid && data.phonePatient && !data.phonePatient.invalid">
+        <button mat-raised-button color="primary" [mat-dialog-close]="data">Schedule!</button>
+    </div>
+
+</div>

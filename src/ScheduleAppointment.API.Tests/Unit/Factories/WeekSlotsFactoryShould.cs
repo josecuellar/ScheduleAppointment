@@ -33,7 +33,14 @@ namespace ScheduleAppointment.API.Tests.Unit.Factories
         public void Log_exception_and_return_list_days_of_week_with_no_availability_when_invalid_slot_interval(int intervalSlot)
         {
             // Act
-            var result = _factory.From(new Model.DTO.AvailabilityWeek() { SlotDurationMinutes = intervalSlot });
+            var result = _factory.From(new Model.DTO.AvailabilityWeek()
+            {
+                Facility = new Facility()
+                {
+                    FacilityId = new Guid()
+                },
+                SlotDurationMinutes = intervalSlot
+            });
 
             // Assert
             _loggerProvider.Verify(m => m.Log(It.IsAny<Exception>()), Times.Once);
@@ -49,7 +56,14 @@ namespace ScheduleAppointment.API.Tests.Unit.Factories
         public void Log_exception_and_return_list_days_of_week_with_no_availability_when_invalid_work_interval_hours(int workStart, int workEnd)
         {
             // Act
-            var result = _factory.From(new Model.DTO.AvailabilityWeek() { SlotDurationMinutes = 0 });
+            var result = _factory.From(new Model.DTO.AvailabilityWeek()
+            {
+                Facility = new Facility()
+                {
+                    FacilityId = new Guid()
+                },
+                SlotDurationMinutes = 0
+            });
 
             // Assert
             _loggerProvider.Verify(m => m.Log(It.IsAny<Exception>()), Times.Once);
@@ -63,6 +77,10 @@ namespace ScheduleAppointment.API.Tests.Unit.Factories
             // Act
             var result = _factory.From(new Model.DTO.AvailabilityWeek()
             {
+                Facility = new Facility()
+                {
+                    FacilityId = new Guid()
+                },
                 SlotDurationMinutes = 60,
                 DayOfMonday = new DateTime(2018, 1, 1),
                 Monday = new DayOfWeekInfo()
@@ -93,6 +111,10 @@ namespace ScheduleAppointment.API.Tests.Unit.Factories
             // Act
             var result = _factory.From(new Model.DTO.AvailabilityWeek()
             {
+                Facility = new Facility()
+                {
+                    FacilityId = new Guid()
+                },
                 SlotDurationMinutes = 60,
                 DayOfMonday = new DateTime(2018, 1, 1),
                 Monday = new DayOfWeekInfo()
@@ -120,6 +142,10 @@ namespace ScheduleAppointment.API.Tests.Unit.Factories
             // Arrange
             var dto = new Model.DTO.AvailabilityWeek()
             {
+                Facility = new Facility()
+                {
+                    FacilityId = new Guid()
+                },
                 DayOfMonday = new DateTime(2018, 12, 31)
             };
 
@@ -138,6 +164,10 @@ namespace ScheduleAppointment.API.Tests.Unit.Factories
             // Arrange
             var dto = new Model.DTO.AvailabilityWeek()
             {
+                Facility = new Facility()
+                {
+                    FacilityId = new Guid()
+                },
                 DayOfMonday = new DateTime(2018, 1, 29)
             };
 

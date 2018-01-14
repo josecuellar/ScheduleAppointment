@@ -3,11 +3,13 @@
     flex-wrap: wrap;
 }
 
-    .items .item {
-        flex: 1 0 10%;
-        box-sizing: border-box;
-        color: #171e42;
-        padding: 10px;
-    }
+.items .item {
+    flex: 1 0 10%;
+    box-sizing: border-box;
+    color: #171e42;
+    padding: 10px;
+}
 
-
+.title-nav {
+    margin-right:20px;
+}

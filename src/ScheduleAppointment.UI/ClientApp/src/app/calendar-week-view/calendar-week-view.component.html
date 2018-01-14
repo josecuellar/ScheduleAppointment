@@ -1,31 +1,52 @@
+<div>
+    <mat-toolbar color="primary">
 
-<nav>
-    <ul class="pagination pagination-sm">
-        <li class="page-item">
-            <a class="page-link" href="#" (click)="PreviousMonday()">Previous</a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" href="#" (click)="NextMonday()">Next</a>
-        </li>
-    </ul>
-</nav>
+        <span class="title-nav">Week view</span>
 
-<div class="items">
-    <div class="item" *ngFor="let daySlot of daySlots">
-        <div class="panel panel-default">
-            <div class="panel-body bg-info">
-                <h4>{{daySlot.currentDate | date:'EEEE':'':'es' | uppercase}}</h4>
-                <h6 [ngClass]="{
-                                    'text-success':daySlot.availableSlots.length > 0, 
-                                    'text-danger':daySlot.availableSlots.length === 0
-                                }">
-                    {{daySlot.currentDate | date: 'dd/MM/yyyy'}}
-                </h6>
-            </div>
-            <div class="panel-body" *ngFor="let slot of daySlot.availableSlots">
-                <a class="btn btn-block btn-success" href="#">{{slot.start | date: 'HH:mm'}}</a>
+        <button mat-icon-button [mat-menu-trigger-for]="menu">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+    </mat-toolbar>
+
+    <mat-menu x-position="before" #menu="matMenu">
+        <button mat-menu-item (click)="PreviousMonday()">
+            <mat-icon>undo</mat-icon>
+            <span>Previous Week</span>
+        </button>
+        <button mat-menu-item color="primary" (click)="NextMonday()">
+            <mat-icon>redo</mat-icon>
+            <span>Next Week</span>
+        </button>
+    </mat-menu>
+
+    <mat-card>
+
+        <div class="items">
+            <div class="item" *ngFor="let daySlot of daySlots">
+                <div class="panel panel-default">
+                    <div class="panel-body bg-info">
+
+                        <h4>{{daySlot.currentDate | date:'EEEE' | uppercase}}</h4>
+
+                        <h6 [ngClass]="{ 'text-success':daySlot.availableSlots.length > 0,
+                                 'text-danger':daySlot.availableSlots.length === 0 }">
+
+                            <b>{{daySlot.currentDate | date: 'dd/MM/yyyy'}}</b>
+
+                        </h6>
+                    </div>
+                    <div class="panel-body" *ngFor="let slot of daySlot.availableSlots">
+                        <button mat-raised-button (click)="openDialog(slot)">{{slot.start | date: 'HH:mm'}}</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+
+    </mat-card>
+
 </div>
+
+
+
+
 

@@ -5,4 +5,5 @@ export class Globals
 {
     CURRENT_DATE: Date = new Date(Date.now());
     API_METHOD_AVAILABILITY_WEEK: string = 'http://localhost:50820/api/availability/week/';
+    API_METHOD_TAKE_SLOT: string = 'http://localhost:50820/api/availability/takeslot/';
 }

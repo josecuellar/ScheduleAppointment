@@ -4,6 +4,8 @@ namespace ScheduleAppointment.API.Model.DTO
 {
     public class Appointment
     {
+        public Guid FacilityId { get; set; }
+
         public DateTime Start {get;set;}
 
         public DateTime End { get; set; }
