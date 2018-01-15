@@ -1,13 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2020
+VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScheduleAppointment.API", "ScheduleAppointment.API\ScheduleAppointment.API.csproj", "{E17E1131-C326-41FF-B0B1-1444D2E30217}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScheduleAppointment.API.Tests", "ScheduleAppointment.API.Tests\ScheduleAppointment.API.Tests.csproj", "{4C06DD1B-5887-47F5-BD47-367DB6B37C54}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScheduleAppointment.UI", "ScheduleAppointment.UI\ScheduleAppointment.UI.csproj", "{FE93FBAF-775A-45DF-B485-375E2779316F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B422E813-A278-4D9C-9AFE-5566A04429F9}"
+	ProjectSection(SolutionItems) = preProject
+		..\.gitignore = ..\.gitignore
+		..\README.md = ..\README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
