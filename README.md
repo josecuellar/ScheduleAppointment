@@ -3,10 +3,10 @@
 Week view of day available slots and form to booking.
 
 <h3>UI</h3>
-<img width="800" src="https://github.com/josecuellar/ScheduleAppointment/blob/master/ReadmeImage2.jpg?raw=true">
+<img width="800" src="https://github.com/josecuellar/ScheduleAppointment/blob/master/ReadmeImage2.jpg?raw=true" />
 
 <h3>API</h3>
-<img width="800" src="https://github.com/josecuellar/ScheduleAppointment/blob/master/ReadmeImage1.jpg?raw=true">
+<img width="800" src="https://github.com/josecuellar/ScheduleAppointment/blob/master/ReadmeImage1.jpg?raw=true" />
 
 <h4>Tech Stack Frontend:</h4>
 <ul>
@@ -21,15 +21,10 @@ Week view of day available slots and form to booking.
 <ul>
     <li><a href="https://github.com/dotnet/core/blob/master/release-notes/download-archives/2.0.0-download.md">.NET Core 2</a></li>
     <li>
-        <a href="https://msdn.microsoft.com/en-us/magazine/mt790184.aspx">C# 7</a>
-        <ul>
-            <li><a href="https://blogs.msdn.microsoft.com/benjaminperkins/2017/03/23/how-to-enable-c-7-in-visual-studio-2017/">How to Enable to VS2017</a></li>
-        </ul>
-    
+        <a href="https://msdn.microsoft.com/en-us/magazine/mt790184.aspx">C# 7 (<a href="https://blogs.msdn.microsoft.com/benjaminperkins/2017/03/23/how-to-enable-c-7-in-visual-studio-2017/">How to Enable to VS2017</a>)</a>
     </li>
     <li><a href="https://swagger.io/">Swagger for API documentation</a></li>
     <li><a href="https://github.com/dotnet/cli">dotNet CLI</a></li>
-    
 </ul>
 
 <h4>Requirements to run:</h4>
