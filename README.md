@@ -8,7 +8,7 @@ Week view of day available slots and form to booking.
 <h3>API</h3>
 <img width="800" src="https://github.com/josecuellar/ScheduleAppointment/blob/master/ReadmeImage1.jpg?raw=true">
 
-<u>Tech Stack Frontend:</u>
+<h4>Tech Stack Frontend:</h4>
 <ul>
     <li><a href="https://angular.io/">Angular 5</a></li>
     <li><a href="https://www.typescriptlang.org/">TypeScript</a></li>
@@ -17,7 +17,7 @@ Week view of day available slots and form to booking.
     <li><a href="https://www.npmjs.com/">npm</a></li>
 </ul>
 
-<u>Tech Stack Backend:</u>
+<h4>Tech Stack Backend:</h4>
 <ul>
     <li><a href="https://github.com/dotnet/core/blob/master/release-notes/download-archives/2.0.0-download.md">.NET Core 2</a></li>
     <li>
@@ -32,7 +32,7 @@ Week view of day available slots and form to booking.
     
 </ul>
 
-<u>Run Demo:</u>
+<h4>Run Demo:</4>
 <ul>
     <li>Run frontend:
         <ul>
