@@ -32,11 +32,21 @@ Week view of day available slots and form to booking.
     
 </ul>
 
+<h4>Requirements to run:</h4>
+<ul>
+    <li>NPM installed</li>
+    <li>Angular CLI installed</li>
+    <li>.Net Core CLI</li>
+    <li>C# 7</li>
+    <li>.Net Core 2</li>
+</ul>
+        
+
 <h4>Run Demo:</h4>
 <ul>
     <li>Run frontend:
         <ul>
-            <li>Restore packages in root folder: <code><b>src\ScheduleAppointment.UI\ClientApp</b></code></li>
+            <li>Go to root folder: <code><b>src\ScheduleAppointment.UI\ClientApp</b></code></li>
             <li>
                 <code><b>npm install</b></code>
             </li>
@@ -48,7 +58,7 @@ Week view of day available slots and form to booking.
     </li>
     <li>Run backend:
         <ul>
-            <li>Run dotNet API: <code><b>src\ScheduleAppointment.API</b></code></li>
+            <li>Go to root folder: <code><b>src\ScheduleAppointment.API</b></code></li>
             <li>
                 <code><b>dotnet run</b></code>
             </li>
