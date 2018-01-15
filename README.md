@@ -42,10 +42,10 @@ Week view of day available slots and form to booking.
         
 
 <h4>Run Demo:</h4>
-<ul>
+<ol>
     <li>Run frontend:
         <ul>
-            <li>Go to root folder: <code><b>src\ScheduleAppointment.UI\ClientApp</b></code></li>
+            <li>Open command prompt and go to root folder: <code><b>src\ScheduleAppointment.UI\ClientApp</b></code></li>
             <li>
                 <code><b>npm install</b></code>
             </li>
@@ -57,14 +57,16 @@ Week view of day available slots and form to booking.
     </li>
     <li>Run backend:
         <ul>
-            <li>Go to root folder: <code><b>src\ScheduleAppointment.API</b></code></li>
+            <li>Open new command prompt and go to root folder: <code><b>src\ScheduleAppointment.API</b></code></li>
             <li>
                 <code><b>dotnet run</b></code>
             </li>
             <li>Started in <a href="http://localhost:50821/">http://localhost:50821/</a></li>
         </ul>
     </li>
-</ul>
+    <li>Open browser and navigate to <a href="http://localhost:4201/">http://localhost:4201/</a></li>
+    <li>Done!</li>
+</ol>
 
 <u>If you have problems with local port permissions, you can change configuration ports used in:</u>
 <ul>
