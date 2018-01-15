@@ -2,6 +2,12 @@
 
 Week view of day available slots and form to booking.
 
+<h3>UI</h3>
+<img width="800" src="http://github.com/josecuellar/ScheduleAppointment/blob/master/ReadmeImage2.jpg?raw=true">
+
+<h3>API</h3>
+<img width="800" src="http://github.com/josecuellar/ScheduleAppointment/blob/master/ReadmeImage1.jpg?raw=true">
+
 <u>Tech Stack Frontend:</u>
 <ul>
     <li><a href="https://angular.io/">Angular 5</a></li>
@@ -30,19 +36,19 @@ Week view of day available slots and form to booking.
 <ul>
     <li>Run frontend:
         <ul>
-            <li>Restore packages in root folder: <code><b>\ScheduleAppointment\src\ScheduleAppointment.UI\ClientApp</b></code></li>
+            <li>Restore packages in root folder: <code><b>src\ScheduleAppointment.UI\ClientApp</b></code></li>
             <li>
                 <code><b>npm install</b></code>
             </li>
             <li>
                 <code><b>npm start</b></code>
             </li>
-            <li>Started in: <a href="http://localhost:4200/">http://localhost:4200/</a></li>
+            <li>Started in: <a href="http://localhost:4201/">http://localhost:4201/</a></li>
         </ul>
     </li>
     <li>Run backend:
         <ul>
-            <li>Run dotNet API: <code><b>\ScheduleAppointment\src\ScheduleAppointment.API</b></code></li>
+            <li>Run dotNet API: <code><b>src\ScheduleAppointment.API</b></code></li>
             <li>
                 <code><b>dotnet run</b></code>
             </li>
@@ -54,15 +60,16 @@ Week view of day available slots and form to booking.
 <u>If you have problems with local port permissions, you can change configuration ports used in:</u>
 <ul>
 <li>
-UI: <code>\ScheduleAppointment\src\ScheduleAppointment.UI\ClientApp\package.json</code>
+UI: <code>src\ScheduleAppointment.UI\ClientApp\package.json</code>
 </li>
 <li>
-API: <code>\ScheduleAppointment\src\ScheduleAppointment.API\Properties\launchSettings.json</code>
+API: <code>src\ScheduleAppointment.API\Properties\launchSettings.json</code>
 </li>
 <li>
 Communication UI 2 API:
-<code>\ScheduleAppointment\src\ScheduleAppointment.UI\ClientApp\src\app\app.globals.ts</code>
+<code>src\ScheduleAppointment.UI\ClientApp\src\app\app.globals.ts</code>
 </li>
 </ul>
 
 <u><b>You also can run API and UI using Visual Studio 2017 and <i>F5</i> or <i>Ctrl+F5</i></b></u>
+
