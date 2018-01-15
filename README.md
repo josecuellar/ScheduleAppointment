@@ -81,3 +81,4 @@ Communication UI 2 API:
 
 <u><b>You also can run API and UI using Visual Studio 2017 and <i>F5</i> or <i>Ctrl+F5</i> to both projects</b></u>
 
+<i>*ToDo: Tests in frontend</i>
