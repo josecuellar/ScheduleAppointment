@@ -90,4 +90,5 @@ Communication UI 2 API:
 <i><u>* ToDos:</i></u> <br>
 <i>* Tests in frontend with Jasmine || Mocha & Karma.</i><br>
 <i>* Handle client exceptions and show frindly user error message.</i><br>
-<i>* Organize available slots with segments of hours in all days.</i>
+<i>* Organize available slots with segments of hours in all days.</i><br>
+<i>* Extract API configuration consts to appSettings.json</i>
