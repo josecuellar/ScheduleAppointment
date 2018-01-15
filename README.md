@@ -81,5 +81,5 @@ Communication UI 2 API:
 </li> 
 </ul>
 
-<u><b>You also can run API and UI using Visual Studio 2017 and <i>F5</i> or <i>Ctrl+F5</i></b></u>
+<u><b>You also can run API and UI using Visual Studio 2017 and <i>F5</i> or <i>Ctrl+F5</i> to both projects</b></u>
 
