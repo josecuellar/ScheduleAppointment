@@ -22,7 +22,7 @@ Week view of day available slots and form to booking.
 <ul>
     <li><a href="https://github.com/dotnet/core/blob/master/release-notes/download-archives/2.0.0-download.md">.NET Core 2</a></li>
     <li>
-        <a href="https://msdn.microsoft.com/en-us/magazine/mt790184.aspx">C# 7 (<a href="https://blogs.msdn.microsoft.com/benjaminperkins/2017/03/23/how-to-enable-c-7-in-visual-studio-2017/">How to Enable to VS2017</a>)</a>
+        <a href="https://msdn.microsoft.com/en-us/magazine/mt790184.aspx">C# 7 (<a href="http://www.c-sharpcorner.com/article/enabling-c-sharp-7-compilation-with-visual-studio-2017/">Enabling C# 7 Compilation With Visual Studio 2017</a> || <a href="https://blogs.msdn.microsoft.com/benjaminperkins/2017/03/23/how-to-enable-c-7-in-visual-studio-2017/">How to Enable to VS2017</a>)</a>
     </li>
     <li><a href="https://swagger.io/">Swagger for API documentation</a></li>
     <li><a href="https://github.com/dotnet/cli">dotNet CLI</a></li>
