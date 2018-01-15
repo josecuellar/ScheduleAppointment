@@ -26,7 +26,7 @@ Week view of day available slots and form to booking.
     <li><a href="https://swagger.io/">Swagger for API documentation</a></li>
     <li><a href="https://github.com/dotnet/cli">dotNet CLI</a></li>
     <li>Tests with <a href="https://github.com/nunit/docs/wiki/.NET-Core-and-.NET-Standard">NUnit</a> & <a href="https://github.com/moq/moq4">Moq</a><br>
-    <img width="400" src="https://github.com/josecuellar/ScheduleAppointment/blob/master/ReadmeImage3.jpg?raw=true">
+    <img width="650" src="https://github.com/josecuellar/ScheduleAppointment/blob/master/ReadmeImage3.jpg?raw=true">
 
 </ul>
 
