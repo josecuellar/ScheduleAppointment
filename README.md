@@ -87,7 +87,7 @@ Communication UI 2 API:
 
 <u><b>You also can run API and UI using Visual Studio 2017 and <i>F5</i> or <i>Ctrl+F5</i> to both projects</b></u>
 
-<i><u>* ToDos:</i></u> <br>
+<i><u>ToDos:</u></i> <br>
 <i>* Tests in frontend with Jasmine || Mocha & Karma.</i><br>
 <i>* Handle client exceptions and show frindly user error message.</i><br>
 <i>* Organize available slots with segments of hours in all days.</i><br>
