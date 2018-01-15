@@ -25,12 +25,15 @@ Week view of day available slots and form to booking.
     </li>
     <li><a href="https://swagger.io/">Swagger for API documentation</a></li>
     <li><a href="https://github.com/dotnet/cli">dotNet CLI</a></li>
+    <li>Tests with <a href="https://github.com/nunit/docs/wiki/.NET-Core-and-.NET-Standard">NUnit</a> & <a href="https://github.com/moq/moq4">Moq</a><br>
+    <img width="400" src="http://github.com/josecuellar/ScheduleAppointment/blob/master/ReadmeImage3.jpg?raw=true">
+
 </ul>
 
 <h4>Requirements to run:</h4>
 <ul>
-    <li>NPM installed</li>
-    <li>Angular CLI installed</li>
+    <li>NPM</li>
+    <li>Angular CLI</li>
     <li>.Net Core CLI</li>
     <li>C# 7</li>
     <li>.Net Core 2</li>
