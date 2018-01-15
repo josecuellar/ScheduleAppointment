@@ -59,6 +59,9 @@ Week view of day available slots and form to booking.
         <ul>
             <li>Open new command prompt and go to root folder: <code><b>src\ScheduleAppointment.API</b></code></li>
             <li>
+                <code><b>dotnet restore</b></code>
+            </li>
+            <li>
                 <code><b>dotnet run</b></code>
             </li>
             <li>Started in <a href="http://localhost:50821/">http://localhost:50821/</a></li>
