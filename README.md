@@ -78,7 +78,7 @@ API: <code>src\ScheduleAppointment.API\Properties\launchSettings.json</code>
 <li>
 Communication UI 2 API:
 <code>src\ScheduleAppointment.UI\ClientApp\src\app\app.globals.ts</code>
-</li>
+</li> 
 </ul>
 
 <u><b>You also can run API and UI using Visual Studio 2017 and <i>F5</i> or <i>Ctrl+F5</i></b></u>
