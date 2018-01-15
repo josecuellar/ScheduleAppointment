@@ -13,7 +13,6 @@ import { FormControl, Validators } from '@angular/forms';
 })
 export class CalendarWeekViewComponent
 {
-
     daySlots: DaySlot[];
     private httpClient: HttpClient;
     private globalsApp: Globals;
@@ -45,9 +44,6 @@ export class CalendarWeekViewComponent
 
         this.httpClient.get<AvailabilityWeekSlots>(this.globalsApp.API_METHOD_AVAILABILITY_WEEK + mondayFormattedForAPI)
             .subscribe(result => {
-
-                console.log(result);
-
                 this.facilityId = result.facilityId;
                 this.daySlots = result.consecutiveDaysOfWeek;
             }, error => console.error(error));
@@ -90,6 +86,9 @@ export class CalendarWeekViewComponent
         });
 
         dialogRef.afterClosed().subscribe(result => {
+
+            if (!result)
+                return;
 
             this.httpClient.post(this.globalsApp.API_METHOD_TAKE_SLOT,
                 {
@@ -137,8 +136,8 @@ interface DaySlot
     selector: 'take-slot-form-modal',
     templateUrl: 'take-slot.form.modal.html',
 })
-export class TakeSlotFormModal {
-
+export class TakeSlotFormModal
+{
     constructor(
         public dialogRef: MatDialogRef<TakeSlotFormModal>,
         @Inject(MAT_DIALOG_DATA) public data: any) { }
@@ -147,4 +146,39 @@ export class TakeSlotFormModal {
         this.dialogRef.close();
     }
 
+    private IsValidEmail(email)
+    {
+        if (email && !email.invalid) {
+            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(email.toLowerCase());
+        }
+
+        return false;
+    }
+
+    private IsValidNumber(phonePatient)
+    {
+        if (phonePatient && !phonePatient.invalid && !Number.isNaN(Number(phonePatient)))
+            return true;
+
+        return false;
+    }
+
+    private IsValidElementForm(elementForm)
+    {
+        if (elementForm && !elementForm.invalid)
+            return true;
+
+        return false;
+    }
+
+    IsValidForm(): boolean {
+        return (
+            this.IsValidEmail(this.data.emailPatient) &&
+            this.IsValidNumber(this.data.phonePatient) &&
+            this.IsValidElementForm(this.data.namePatient) &&
+            this.IsValidElementForm(this.data.commentsPatient) &&
+            this.IsValidElementForm(this.data.surnamesPatient)
+        );
+    }
 }

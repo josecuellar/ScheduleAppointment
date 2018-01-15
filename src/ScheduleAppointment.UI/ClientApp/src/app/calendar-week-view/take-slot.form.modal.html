@@ -5,6 +5,7 @@
 </h1>
 <div mat-dialog-content>
 
+    <input type="hidden" [(ngModel)]="data.facilityId">
 
     <mat-form-field>
         <input matInput [(ngModel)]="data.namePatient" placeholder="Nombre" required>
@@ -12,22 +13,22 @@
     </mat-form-field>
 
     <mat-form-field>
-        <input matInput [(ngModel)]="data.surnamesPatient" placeholder="Apellidos">
+        <input matInput [(ngModel)]="data.surnamesPatient" placeholder="Apellidos" required>
     </mat-form-field>
 
     <mat-form-field>
-        <input matInput placeholder="Your email" [(ngModel)]="data.emailPatient">
+        <input matInput placeholder="Your email" [(ngModel)]="data.emailPatient" required email>
     </mat-form-field>
 
     <mat-form-field>
-        <input matInput placeholder="Your phone" [(ngModel)]="data.phonePatient" required>
+        <input matInput type="number" placeholder="Your phone" [(ngModel)]="data.phonePatient" required tel>
         <mat-error>
             Please enter your phone
         </mat-error>
     </mat-form-field>
 
     <mat-form-field>
-        <textarea matInput placeholder="Comentarios" [(ngModel)]="data.commentsPatient"></textarea>
+        <textarea matInput placeholder="Comentarios" [(ngModel)]="data.commentsPatient" required></textarea>
     </mat-form-field>
 
 </div>
@@ -36,7 +37,7 @@
 <div mat-dialog-actions>
     <button mat-button color="accent" (click)="onNoClick()">Cancel</button>&nbsp;
 
-    <div *ngIf="data.namePatient && !data.namePatient.invalid && data.phonePatient && !data.phonePatient.invalid">
+    <div *ngIf="IsValidForm()">
         <button mat-raised-button color="primary" [mat-dialog-close]="data">Schedule!</button>
     </div>
 
