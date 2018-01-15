@@ -3,7 +3,7 @@
 Week view of day available slots and form to booking.
 
 <h3>UI</h3>
-<img width="800" src="http://github.com/josecuellar/ScheduleAppointment/blob/master/ReadmeImage2.jpg?raw=true">
+<img width="800" src="/josecuellar/ScheduleAppointment/blob/master/ReadmeImage2.jpg?raw=true">
 
 <h3>API</h3>
 <img width="800" src="http://github.com/josecuellar/ScheduleAppointment/blob/master/ReadmeImage1.jpg?raw=true">
