@@ -32,7 +32,7 @@ Week view of day available slots and form to booking.
     
 </ul>
 
-<h4>Run Demo:</4>
+<h4>Run Demo:</h4>
 <ul>
     <li>Run frontend:
         <ul>
