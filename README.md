@@ -15,17 +15,18 @@ Week view of day available slots and form to booking.
     <li><a href="https://material.angular.io/">Angular Material</a></li>
     <li><a href="https://getbootstrap.com/">Bootstrap</a></li>
     <li><a href="https://www.npmjs.com/">npm</a></li>
+    <li><a href="https://www.w3schools.com/css/css3_flexbox.asp">CSS 3 Flexible Box</a></li>
 </ul>
 
 <h4>Tech Stack Backend:</h4>
 <ul>
     <li><a href="https://github.com/dotnet/core/blob/master/release-notes/download-archives/2.0.0-download.md">.NET Core 2</a></li>
     <li>
-        <a href="https://msdn.microsoft.com/en-us/magazine/mt790184.aspx">C# 7 (<a href="https://blogs.msdn.microsoft.com/benjaminperkins/2017/03/23/how-to-enable-c-7-in-visual-studio-2017/">How to Enable to VS2017</a>)</a>
+        <a href="https://msdn.microsoft.com/en-us/magazine/mt790184.aspx">C# 7 (<a href="http://www.c-sharpcorner.com/article/enabling-c-sharp-7-compilation-with-visual-studio-2017/">Enabling C# 7 Compilation With Visual Studio 2017</a> || <a href="https://blogs.msdn.microsoft.com/benjaminperkins/2017/03/23/how-to-enable-c-7-in-visual-studio-2017/">How to Enable to VS2017</a>)</a>
     </li>
     <li><a href="https://swagger.io/">Swagger for API documentation</a></li>
     <li><a href="https://github.com/dotnet/cli">dotNet CLI</a></li>
-    <li>Tests with <a href="https://github.com/nunit/docs/wiki/.NET-Core-and-.NET-Standard">NUnit</a> & <a href="https://github.com/moq/moq4">Moq</a><br>
+    <li>Tests with <a href="https://github.com/nunit/docs/wiki/.NET-Core-and-.NET-Standard">NUnit</a> & <a href="https://github.com/moq/moq4">Moq</a><br><br>
     <img width="650" src="https://github.com/josecuellar/ScheduleAppointment/blob/master/ReadmeImage3.jpg?raw=true">
 
 </ul>
@@ -41,10 +42,10 @@ Week view of day available slots and form to booking.
         
 
 <h4>Run Demo:</h4>
-<ul>
+<ol>
     <li>Run frontend:
         <ul>
-            <li>Go to root folder: <code><b>src\ScheduleAppointment.UI\ClientApp</b></code></li>
+            <li>Open command prompt and go to root folder: <code><b>src\ScheduleAppointment.UI\ClientApp</b></code></li>
             <li>
                 <code><b>npm install</b></code>
             </li>
@@ -56,14 +57,19 @@ Week view of day available slots and form to booking.
     </li>
     <li>Run backend:
         <ul>
-            <li>Go to root folder: <code><b>src\ScheduleAppointment.API</b></code></li>
+            <li>Open new command prompt and go to root folder: <code><b>src\ScheduleAppointment.API</b></code></li>
+            <li>
+                <code><b>dotnet restore</b></code>
+            </li>
             <li>
                 <code><b>dotnet run</b></code>
             </li>
             <li>Started in <a href="http://localhost:50821/">http://localhost:50821/</a></li>
         </ul>
     </li>
-</ul>
+    <li>Open browser and navigate to <a href="http://localhost:4201/">http://localhost:4201/</a></li>
+    <li>Done!</li>
+</ol>
 
 <u>If you have problems with local port permissions, you can change configuration ports used in:</u>
 <ul>
@@ -81,4 +87,8 @@ Communication UI 2 API:
 
 <u><b>You also can run API and UI using Visual Studio 2017 and <i>F5</i> or <i>Ctrl+F5</i> to both projects</b></u>
 
-<i>*ToDo: Tests in frontend</i>
+<i><u>ToDos:</u></i> <br>
+<i>* Tests in frontend with Jasmine || Mocha & Karma.</i><br>
+<i>* Handle client exceptions and show frindly user error message.</i><br>
+<i>* Organize available slots with segments of hours in all days.</i><br>
+<i>* Extract API configuration consts to appSettings.json</i>
