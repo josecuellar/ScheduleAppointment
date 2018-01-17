@@ -33,7 +33,8 @@ namespace ScheduleAppointment.API.Controllers
                 Condition.Requires(dayOfStartWeek)
                     .IsNotNullOrEmpty("Day start of weeb is mandatory");
 
-                DateTime.TryParseExact(dayOfStartWeek, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dayOfStartWeekParsed);
+                Condition.Requires(DateTime.TryParseExact(dayOfStartWeek, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dayOfStartWeekParsed))
+                    .IsTrue("dayOfStartWeek must be valid datetime");
 
                 Condition.Requires(dayOfStartWeekParsed)
                     .Evaluate(x => x.DayOfWeek == DayOfWeek.Monday, "Weekly based method: always expect Monday");

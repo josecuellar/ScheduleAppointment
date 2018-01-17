@@ -45,6 +45,20 @@ namespace ScheduleAppointment.API.Tests.Integration
         }
 
 
+        [TestCase("ABCD")]
+        [TestCase("1234")]
+        [TestCase("1236-18-32")]
+        [TestCase("1")]
+        public async Task Return_bad_request_given_invalid_start_date_of_week(string invalidDateTime)
+        {
+            // Act
+            var response = await _client.GetAsync(string.Format("{0}/{1}", AVAILABILITY_WEEK_SLOTS_METHOD, invalidDateTime));
+
+            // Assert
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.BadRequest);
+        }
+
+
         [TestCase("20180417")]
         [TestCase("20181118")]
         public async Task Return_bad_request_given_start_date_of_week_is_not_monday(string startDate)

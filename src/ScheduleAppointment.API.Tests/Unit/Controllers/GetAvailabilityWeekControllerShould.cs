@@ -67,6 +67,21 @@ namespace ScheduleAppointment.API.Tests.Unit.Controllers
             _loggerProviderMock.Verify(m => m.Log(It.IsAny<ArgumentException>()), Times.Once);
         }
 
+        [TestCase("ABCD")]
+        [TestCase("1234")]
+        [TestCase("1236/18/32")]
+        [TestCase("1236-18-32")]
+        [TestCase("1")]
+        public async Task Catch_and_log_exception_given_start_date_of_week_is_not_valid(string startDate)
+        {
+            // Act
+            var result = await _controller.List(startDate);
+
+            // Assert
+            Assert.IsInstanceOf<BadRequestObjectResult>(result);
+            _loggerProviderMock.Verify(m => m.Log(It.IsAny<ArgumentException>()), Times.Once);
+        }
+
 
         [TestCase("20180312")]
         [TestCase("20181015")]
