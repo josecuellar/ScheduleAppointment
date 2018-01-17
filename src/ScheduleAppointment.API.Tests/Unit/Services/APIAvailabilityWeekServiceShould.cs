@@ -2,6 +2,7 @@ using Moq;
 using NUnit.Framework;
 using ScheduleAppointment.API.Factories;
 using ScheduleAppointment.API.Model.DTO;
+using ScheduleAppointment.API.Model.Exceptions;
 using ScheduleAppointment.API.Providers;
 using ScheduleAppointment.API.Services.Impl;
 using System;
@@ -75,8 +76,10 @@ namespace ScheduleAppointment.API.Tests.Unit.Services
                 var result = await _service.GetAvailabilityWeekData(parameter);
                 Assert.Fail();
             }
-            catch (Exception)
-            { }
+            catch (Exception err)
+            {
+                Assert.IsInstanceOf(typeof(GetAvailabilityWeekDataException), err);
+            }
 
             // Assert
             _loggerProvider.Verify(m => m.Log(exception), Times.Once);
@@ -207,8 +210,10 @@ namespace ScheduleAppointment.API.Tests.Unit.Services
                 await _service.TakeAppointment(It.IsAny<Appointment>());
                 Assert.Fail();
             }
-            catch (Exception)
-            { }
+            catch (Exception err)
+            {
+                Assert.IsInstanceOf(typeof(TakeAppointmentException), err);
+            }
 
             // Assert
             _loggerProvider.Verify(m => m.Log(exception), Times.Once);

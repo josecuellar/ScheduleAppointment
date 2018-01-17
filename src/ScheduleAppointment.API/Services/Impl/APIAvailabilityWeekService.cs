@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using ScheduleAppointment.API.Factories;
 using ScheduleAppointment.API.Model.DTO;
+using ScheduleAppointment.API.Model.Exceptions;
 using ScheduleAppointment.API.Providers;
 using System;
 using System.Threading.Tasks;
@@ -45,7 +46,7 @@ namespace ScheduleAppointment.API.Services.Impl
             catch (Exception err)
             {
                 await _loggerProvider.Log(err);
-                throw (err);
+                throw (new TakeAppointmentException(Resources.FriendlyMessageException.TakeAppointmentExceptionMessage, err));
             }
         }
 
@@ -90,7 +91,7 @@ namespace ScheduleAppointment.API.Services.Impl
             catch (Exception err)
             {
                 await _loggerProvider.Log(err);
-                throw (err);
+                throw (new GetAvailabilityWeekDataException(Resources.FriendlyMessageException.GetAvailabilityWeekDataExceptionMessage, err));
             }
         }
     }
